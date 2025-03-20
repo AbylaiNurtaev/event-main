@@ -1,0 +1,145 @@
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: center
+    align-items: center
+    width: 100%
+
+    .container 
+        width: 700px
+        height: 500px
+        overflow-y: scroll
+
+        border: 1px solid #1111112f
+        border-radius: 5px
+
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: center
+
+        padding-top: 20px
+        position: fixed
+
+        z-index: 20
+        background: white
+
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        
+        .countity
+            margin-top: 30px
+
+        .closeBtn
+            position: absolute
+            right: 10px
+            top: 10px
+
+            width: 50px
+        
+        p
+            font-size: 20px
+
+        .title
+            font-weight: bolder
+            font-size: 23px
+            margin-top: 20px
+            margin-bottom: 20px
+
+        button
+            width: 150px
+            height: 35px 
+            background: black
+
+            color: white
+            font-weight: bolder
+            border: none
+            margin-top: 20px
+            cursor: pointer
+
+
+    .applications
+        display: flex
+        flex-direction: column
+
+        justify-content: center
+        align-items: center
+
+        width: 100%
+
+        .application 
+            margin-top: 60px
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+
+            justify-content: center
+            align-items: center
+
+            gap: 30px
+            width: 100%
+
+
+
+
+    .nominations
+        display: flex
+        flex-direction: column
+
+        justify-content: center
+        align-items: center
+        width: 100%
+        margin-top: 50px   
+
+
+        .nomination
+            display: flex
+            flex-direction: column
+
+            justify-content: space-between
+            align-items: flex-start
+
+            // height: 50px    
+            border-bottom: 1px solid #11111126
+            width: 80%
+
+            p
+                font-size: 18px
+                padding: 10px
+
+            img
+                width: 20px
+
+            .buttons
+                display: flex
+                flex-direction: row
+
+
+                gap: 10px
+
+            .accessApplicationBtn
+                background: #5ea45e
+                color: white
+
+                border: none
+                width: 200px
+                height: 30px
+
+                border-radius: 4px
+                cursor: pointer
+
+            .nominationBlock
+                display: flex
+                flex-direction: row
+
+                justify-content: center
+                align-items: center
+                gap: 20px
+
+                height: 100px
+
+                
+                

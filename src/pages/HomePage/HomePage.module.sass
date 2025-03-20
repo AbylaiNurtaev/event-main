@@ -1,0 +1,520 @@
+@font-face 
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+
+
+.container
+    display: grid
+    place-items: center
+
+    width: 100%
+    
+    margin: 0 !important
+    
+    .innerContainer
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: center
+
+        background: #F0EFEC !important
+        height: auto
+        // height: 1399px  
+        width: 100%
+        
+
+        *
+            // outline: 1px solid black
+        
+
+        .images
+            display: none
+
+        .rowDiv
+            display: none
+        .light
+            // opacity: 0.4
+            position: absolute
+            width: 70%
+            z-index: 0
+            pointer-events: none
+
+        .title, .redTitle
+            font-weight: 800
+            font-family: steelfish
+            font-size: 571px
+            color: #ca252a
+            z-index: 1
+            line-height: 105px
+            text-align: center
+            
+            margin: 0
+            margin-top: 200px
+
+        .redTitle
+            color: #ca252a
+            margin-top: 54px
+
+        .mobileLines
+            // display: none
+            z-index: 10
+
+
+        .buttons
+            display: flex
+            flex-direction: row
+
+            justify-content: center
+            align-items: center
+
+            gap: 24px
+            z-index: 1
+            
+            margin-top: 72px
+            width: 100%
+            background: #ca252a
+            height: 120px
+            margin-top: -10px
+            
+            z-index: 25
+            
+            .left, .right
+                width: 231px
+                height: 70px
+
+                border: 1px solid black
+                font-family: "Inter", system-ui
+
+                font-size: 18px
+                font-weight: 800
+
+                background: white
+                cursor: pointer
+                
+                border: 1px solid white
+                background: none
+
+                color: white
+
+                
+
+            .right
+                width: 372px
+                height: 70px
+
+                
+
+                background: white
+                color: black
+                border: none
+                // border: 1px solid black
+                
+                .mobileBR
+                    display: none
+
+        .lines
+            margin-top: 80px
+            
+            
+            
+
+            img
+                position: absolute
+                width: 90%
+                left: 14%
+
+        
+
+        .infoBlock
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: flex-start
+
+            width: 100%
+            
+            gap: 200px
+
+            // margin-top: 300px
+        
+
+            .left
+                display: flex
+                flex-direction: column
+
+                justify-content: flex-start
+                align-items: flex-start
+
+                width: 464px
+                .title
+                    font-size: 120px
+                    
+                    font-weight: 800
+                    font-family: steelfish
+                    color: #ca252a
+
+                .par
+                    margin: 0
+                    margin-top: 100px
+                    font-size: 22px
+                    line-height: 40px
+
+                button
+                    width: 286px
+                    height: 70px
+                    border: 2px solid black
+
+                    background: none
+                    font-family: "Inter", system-ui
+
+                    font-size: 18px
+                    font-weight: 800
+                    margin-top: 100px
+                    cursor: pointer
+
+                    z-index: 1
+
+                .fetil
+                    position: absolute
+                    margin-top: 51%
+                    z-index: 0
+                    left: 200px
+            
+            .right
+                display: flex
+                flex-direction: column
+
+                justify-content: flex-start
+                align-items: flex-start
+
+                .images
+                    display: none
+
+                .title
+                    font-family: steelfish
+                    font-size: 120px
+                    font-weight: 800
+                    color: black
+
+                
+                .date, .date1
+                    font-size: 47px
+                    font-weight: 800
+                    font-family: steelfish
+                    margin-top: 100px
+                    color: #ca252a
+
+
+                button
+                    width: 376px
+                    height: 70px
+                    border: 2px solid black
+
+                    background: none
+                    font-family: "Inter", system-ui
+
+                    font-size: 18px
+                    font-weight: 800
+                    margin-top: 10px
+                    white-space: nowrap
+                    cursor: pointer
+
+                    z-index: 1
+
+                    
+                        
+                .date1
+                    margin-top: 32px
+
+
+
+                .subTitle
+                    margin-top: 24px
+                    font-weight: 400
+                    font-family: steelfish
+                    font-size: 35px
+                
+                .par
+                    margin: 0
+                    margin-top: 16px
+                    font-family: "Inter", system-ui
+                    font-size: 17px
+                    font-weight: 500
+
+
+
+                img
+                    margin-top: 32px
+
+
+        .image
+            width: 100%
+            margin-top: 150px
+
+
+        .partners
+            display: flex
+            flex-direction: column
+
+            justify-content: flex-start
+            align-items: flex-start
+            
+            margin-top: 120px
+            width: 1052px
+            
+
+            padding-bottom: 120px
+
+            
+            .title
+                margin: 0
+                font-size: 120px
+                font-weight: 800
+                font-family: Steelfish
+                color: #ca252a
+                
+
+            .par    
+                margin-top: 50px
+                line-height: 39.6px
+                font-size: 22px
+
+                font-weight: 400
+                font-family: "Inter", system-ui
+                
+            .row
+                margin-top: 100px
+
+        
+
+        
+        .joury
+        
+            background: white
+            
+
+            display: flex
+            flex-direction: column
+
+            justify-content: center
+            align-items: center
+            // margin-left: 80px
+
+
+            
+
+@media screen and ( max-width:  1350px)
+    .container
+        .innerContainer
+            .title, .redTitle
+                font-size: 80px
+                margin-top: 50px
+
+            .redTitle
+                margin-top: 30px
+
+            .lines
+                margin-top: 50px
+
+            .infoBlock
+                gap: 50px
+                align-items: flex-start
+
+                .left
+                    width: 300px
+
+                    .title
+                        font-size: 70px
+
+                    .par
+                        font-size: 17px
+                        line-height: 28 px
+                        margin-top: 30px
+
+                    button
+                        margin-top: 30px
+
+                .right
+                    width: 300px
+                    .fetil
+                        width: 100%
+                    .title
+                        font-size: 70px
+
+                    .date, .date1
+                        margin-top: 50px
+
+            .partners
+                width: 700px
+
+                .title
+                    font-size: 80px
+
+                .par
+                    font-size: 18px
+                    line-height: 28px
+
+                .row
+                    width: 95%
+
+@media screen and ( max-width:  1000px)
+    .container
+        width: 100vw
+        .innerContainer
+            width: 100vw
+
+            
+
+            
+            
+            .title, .redTitle
+                font-size: 223px
+                // width: 300px
+                line-height: 100%
+
+                margin-top: 43px
+                margin-left: 0
+                left: 0
+
+            .joury
+                // width: 90vw
+                
+
+            .redTitle
+                margin-top: 0
+
+            .lines
+                display: none
+
+            .mobileLines
+                margin-top: -70px
+                display: block
+                
+                
+                
+                
+            
+                img
+                    width: 100vw
+            .images
+                display: flex
+                width: 100vw
+                margin-top: 50px
+
+            .buttons    
+                flex-direction: column
+                margin-top: -10px
+                height: 253px
+                
+                
+
+                .left, .right
+                    width: 320px
+
+                .left
+                    // color: black
+                    color: white
+                    
+                    
+                .right
+                    height: 92px
+                    white-space: normal // разрешаем перенос текста
+                    word-wrap: break-word
+
+                    .mobileBR
+                        display: flex
+                        
+            .rowDiv
+                display: flex
+                width: 100vw
+
+                overflow-x: scroll
+
+                
+                    
+
+            .row
+                display: none
+
+            .infoBlock
+                flex-direction: column
+                gap: 0
+                width: 100%
+
+                justify-content: flex-start
+                align-items: flex-start
+                margin-top: 100px
+
+
+                button
+                    color: black
+                    
+
+                .left, .right
+                    width: calc( 100vw - 32px )
+                    padding-left: 16px
+
+
+                    .title
+                        font-size: 60px
+                        text-align: left
+                        
+
+                    .par
+                        margin-top: 50px
+                        line-height: 180%
+
+                    button
+                        width: 286px
+
+                .right
+                    .images
+                        display: flex
+                        flex-direction: row
+                        justify-content: flex-start
+                        align-items: flex-start
+                        width: 100%
+                        
+                        img
+                            &:nth-child(2)
+                                position: absolute
+                                margin-top: -50px
+                                
+
+                    button
+                        width: 95%
+                        
+                        margin-top: 16px
+                                
+                               
+                            
+
+                    .fetil
+                        display: none
+
+
+            .image
+                width: 100vw
+                height: 309px
+                object-fit: cover
+                margin-top: 100px
+
+
+            .partners
+                width: 100vw
+                margin-top: 60px
+
+                .title
+                    text-align: left
+                    font-size: 60px
+
+                .title, .par
+                    margin-left: 16px
+
+                .rowDiv
+                    overflow-x: scroll
+                    width: 95%
+                    
+                        
+                    

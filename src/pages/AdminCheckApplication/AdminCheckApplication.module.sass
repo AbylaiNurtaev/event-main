@@ -1,0 +1,568 @@
+@font-face 
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+    
+    
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: center
+    align-items: center
+
+    width: 100%
+
+    background: white
+    .innerContainer
+        width: 1052px
+
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: flex-start
+        
+
+        .crumbs
+            text-align: left
+            display: flex
+            flex-direction: row
+            gap: 16px
+            margin-top: 50px
+            cursor: pointer
+
+            p
+                font-family: "Inter", system-ui
+                font-weight: 500
+                font-size: 18px
+                line-height: 180%
+                
+               
+                color: #020204
+
+        .title
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 120px
+
+            width: 100%
+            
+            color: #ca252a
+            margin-top: 50px
+            text-transform: uppercase
+
+
+        .par
+            padding-bottom: 50px
+            margin-top: 40px
+            border-bottom: 2.5px solid rgba(2, 2, 4, 0.8)
+            font-family: "Gilroy", sans-serif
+            font-weight: 500
+            font-size: 25px
+            line-height: 160%
+            color: #020204
+            width: 100%
+
+        .boldText
+            font-family: "Steelfish", sans-serif
+            font-weight: 700
+            font-size: 32px
+            text-transform: uppercase
+            color: #020204
+            margin-top: 100px
+
+            padding-bottom: 24px
+            border-bottom: 1.50px solid rgba(2, 2, 4, 0.1)
+            width: 100%
+
+        .mainInformation, .socialMedias
+            display: flex
+            flex-direction: column
+            justify-content: flex-start
+            align-items: flex-start
+            margin-top: 40px
+
+
+            width: 100%
+            gap: 24px
+
+            .block
+                display: flex
+                align-items: center
+                justify-content: center
+                flex-direction: row
+                gap: 24px
+
+                    
+
+                p
+                    font-family: "Montserrat", sans-serif
+                    font-weight: 500
+                    font-size: 18px
+                    line-height: 180%
+                    color: #020204
+                    margin: 0
+                    width: 300px
+
+                    span
+                        color: #ca252a
+
+                input, textarea, select
+                    width: 384px
+                    height: 56px
+                    padding-left: 16px
+                    border: 1px solid rgba(2, 2, 4, 0.1)
+                    font-size: 18px
+
+                    font-family: "Montserrat", sans-serif
+                    font-weight: 500
+                    font-size: 18px
+
+                    &:focus
+                        outline: none
+
+                
+                .selectWrapper 
+                    position: relative
+                    display: inline-block
+                    select 
+                        -webkit-appearance: none
+                        cursor: pointer
+                        -moz-appearance: none
+                        appearance: none
+                        padding-right: 40px
+                        background-color: #fff
+                        border: 1px solid #ccc
+                        width: 404px
+                        height: 56px
+                        font-size: 16px
+                        position: relative
+                    
+
+                    &::after 
+                        width: 16px
+                        height: 16px
+                        background: url('../../../public/images/vaadin_chevron-up.svg') no-repeat center center
+                        color: #ca252a /* Цвет стрелки */
+                        content: ''
+                        background-size: contain
+                        position: absolute
+                        right: 10px /* Сдвигаем стрелку влево */
+                        top: 50%
+                        transform: translateY(-50%)
+                        font-size: 18px /* Размер стрелки */
+                        pointer-events: none /* Чтобы стрелка не перекрывала клики */
+
+
+
+
+                img
+                    width: 186px
+                    height: 186px
+
+                    object-fit: cover
+                    cursor: pointer
+                
+                textarea
+                    height: 248px
+                    resize: none
+                    padding-top: 10px
+
+        .previewBlock
+            width: 100%
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+            gap: 24px
+            // height: auto
+
+            .small
+                width: 245px
+                height: 252px
+                position: relative
+
+            .large
+                width: 334px
+                height: 252px
+                position: relative
+
+            img, .previewImage
+                width: 100%
+                height: 100%
+                object-fit: cover
+                transition: .3s
+
+                &:hover
+                    transition: .3s
+                    filter: brightness(50%)
+                            
+
+            .small:hover .closeBtn,
+            .large:hover .closeBtn
+                display: block
+
+
+                    
+            .closeBtn
+                display: none
+                position: absolute
+                width: 30px
+                height: 30px
+                cursor: pointer
+                right: 5px
+                top: 5px
+
+                &:hover
+                    display: block
+                
+                // margin-left: -30px
+
+            
+
+
+
+
+        .photosBlock, .videosBlock
+            width: 100%
+            padding-bottom: 10px
+            
+
+            .boldText
+                font-family: "Steelfish", sans-serif
+                font-weight: 700
+                font-size: 32px
+                text-transform: uppercase
+                color: #020204
+                margin-top: 40px
+
+                padding-bottom: 24px
+                border-bottom: 1.50px solid rgba(2, 2, 4, 0.1)
+                width: 100%
+
+            .inputBlock
+                margin-top: 40px
+                cursor: pointer
+                display: flex
+                flex-direction: column
+
+                justify-content: center
+                align-items: center
+
+                width: 100%
+                height: 160px
+                border: 1.50px dashed rgba(2, 2, 4, 0.1)
+                background: #f9f8f7
+                gap: 8px
+
+                p
+                    font-family: "Montserrat", sans-serif
+                    font-weight: 500
+                    font-size: 18px
+                    line-height: 180%
+                    text-align: center
+                    color: #020204
+
+                    &:nth-child(2)
+                        color: #b0b0b0
+                        
+
+        .videosBlock
+
+            .videoBlock
+                
+                display: flex
+                flex-direction: row
+                justify-content: space-between
+                align-items: flex-start
+
+                margin-top: 40px
+
+                .left, .right
+
+                    display: flex
+                    flex-direction: column
+
+                    gap: 8px
+
+                    .deleteBlock
+                        display: flex
+                        flex-direction: row
+
+                        justify-content: space-between
+                        align-items: center
+                        
+
+                        width: 100%
+
+                            
+
+                        .delete
+                            color: #ca252a
+                            cursor: pointer
+                            display: flex
+                            font-weight: 600
+
+                            
+
+                            
+                    p, input
+                        font-family: "Montserrat", sans-serif
+                        font-weight: 500
+                        font-size: 18px
+                        line-height: 180%
+                        color: #020204
+                    input
+                        width: 510px
+                        height: 56px
+                        border: 1px solid rgba(2, 2, 4, 0.1)
+                        background: #fff
+                        padding-left: 16px
+                        &:focus
+                            outline: none
+
+
+                .right
+                    border: 1.50px dashed rgba(2, 2, 4, 0.1)
+                    // padding: 44px 16px
+                    width: 510px
+                    height: 264px
+
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    flex-direction: column
+                    cursor: pointer
+                    gap: 8px
+                    background: #f9f8f7
+
+                    p
+                        &:nth-child(2)
+                            color: #b0b0b0
+
+                    img
+                        width: 100%
+                        height: 100%
+                        object-fit: cover
+                            
+
+                
+            .addBtn
+                border: 1.50px solid #020204
+                width: 267px
+                height: 56px
+
+                background: #fff
+
+                font-family: "Montserrat", sans-serif
+                font-weight: 800
+                font-size: 18px
+                text-transform: uppercase
+                color: #020204
+
+                display: flex
+                flex-direction: row
+
+                justify-content: center
+                align-items: center
+                gap: 8px
+                cursor: pointer
+                margin-top: 20px
+
+        .checkboxBlock
+            display: flex
+            flex-direction: row
+
+            gap: 11px
+
+            justify-content: center
+            align-items: center
+
+            margin-top: 50px
+            input
+                margin-top: 5px
+                width: 20px
+                height: 20px
+
+            p
+
+        .btnWrapper
+            width: 100%
+
+            display: grid
+            place-items: center
+
+            margin-top: 40px
+
+
+            .sendBtn
+                display: grid
+                place-items: center
+
+                background: #ca252a
+
+                width: 255px
+                height: 95px
+
+                display: flex
+                align-items: center
+                justify-content: center
+                flex-direction: column
+                cursor: pointer
+                margin-bottom: 40px
+                border: none
+
+
+
+                p
+                    font-family: "Montserrat", sans-serif
+                    font-weight: 800
+                    font-size: 18px
+                    text-transform: uppercase
+                    color: #fff
+
+                    &:nth-child(2)
+                        text-transform: none
+                        font-weight: 400
+                        font-size: 14px
+                    
+
+        .addDocument
+            width: 100%
+
+            .inputBlock
+                margin-top: 40px
+                cursor: pointer
+                display: flex
+                flex-direction: column
+
+                justify-content: center
+                align-items: center
+
+                width: 100%
+                height: 160px
+                border: 1.50px dashed rgba(2, 2, 4, 0.1)
+                background: #f9f8f7
+                gap: 8px
+
+                p
+                    font-family: "Montserrat", sans-serif
+                    font-weight: 500
+                    font-size: 18px
+                    line-height: 180%
+                    text-align: center
+                    color: #020204
+
+                    &:nth-child(2)
+                        color: #b0b0b0
+
+            .fileList li
+                list-style-type: none
+                display: flex
+                flex-direction: row
+
+                justify-content: flex-start
+                align-items: center
+                gap: 15px
+                cursor: pointer
+                margin-top: 10px
+
+                .size 
+                    color: #B0B0B0
+
+                .closeBtn 
+                    cursor: pointer
+                
+    .questions
+        width: 100%
+        display: grid
+        place-items: center
+        background: #f0efec
+
+    .balancePopup
+        position: fixed
+        top: 20vh
+        z-index: 10
+        .shadow 
+            position: fixed
+            top: 0
+            left: 0
+            width: 100vw
+            height: 100vh
+            background-color: rgba(0, 0, 0, 0.5) // Полупрозрачный черный фон
+            z-index: -1
+
+    .addProject
+        width: 250px
+        height: 45px
+        
+        border: 1px solid black
+        background: none
+
+        
+        text-transform: uppercase
+        font-size: 19px
+        
+        cursor: pointer
+        margin-top: 100px
+        font-family: "Montserrat", sans-serif
+        font-weight: 800
+
+    .additionalFields
+        width: 100%
+        .title
+            font-size: 50px
+            color: black
+            width: 100%
+
+            border-bottom: 1.50px solid rgba(2, 2, 4, 0.1)
+            padding-bottom: 30px
+
+            display: flex
+            flex-direction: row
+
+            justify-content: space-between
+            align-items: center
+
+            .delete
+                font-family: "Inter", sans-serif
+                font-size: 15px
+                font-weight: 700
+
+                color: #9f2525
+                cursor: pointer
+
+        .block
+            display: flex
+            align-items: center
+            justify-content: flex-start
+            flex-direction: row
+            gap: 24px
+
+                
+
+            p
+                font-family: "Montserrat", sans-serif
+                font-weight: 500
+                font-size: 18px
+                line-height: 180%
+                color: #020204
+                margin: 0
+                width: 300px
+
+                span
+                    color: #ca252a
+
+            input, textarea, select
+                width: 384px
+                height: 56px
+                padding-left: 16px
+                border: 1px solid rgba(2, 2, 4, 0.1)
+                font-size: 18px
+
+                font-family: "Montserrat", sans-serif
+                font-weight: 500
+                font-size: 18px
+                margin-top: 20px
+
+                &:focus
+                    outline: none

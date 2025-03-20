@@ -1,0 +1,746 @@
+@font-face 
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+    
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: flex-start
+    align-items: flex-start
+
+    width: 100%
+    
+    background: white
+
+    .rowDiv
+        display: none
+    p
+        font-family: "Inter", system-ui
+        font-weight: 600
+        font-size: 18px
+        cursor: pointer
+
+    .crumbs
+        text-align: left
+        margin: 50px  0 0 80px
+        display: flex
+        flex-direction: row
+        gap: 16px
+        
+    .about
+        margin: 50px 0 0 80px
+        padding-bottom: 50px
+        border-bottom: 1px solid black
+        width: 85%
+        h1
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 120px
+            text-transform: uppercase
+            color: #ca252a
+
+        p
+            font-family: "Inter", system-ui
+            font-weight: 500
+            font-size: 22px
+            line-height: 180%
+            margin-top: 50px
+            
+            color: #020204
+
+    .history
+        width: 1052px
+        padding: 150px 80px
+
+        display: flex
+        flex-direction: row
+
+        justify-content: space-between
+        align-items: flex-start
+        gap: 150px
+        
+
+        .left, .right
+            display: flex
+            flex-direction: column
+
+            justify-content: flex-start
+            align-items: flex-start
+            gap: 80px
+
+            h1
+                font-family: "Steelfish", sans-serif
+                font-weight: 800
+                font-size: 120px
+                text-transform: uppercase
+                color: #020204
+
+            p
+                font-family: "Inter", system-ui
+                font-weight: 500
+                font-size: 22px
+                line-height: 180%
+                color: #020204
+
+            .blocks
+                display: flex
+                flex-direction: row
+
+                justify-content: flex-start
+                align-items: flex-start
+                width: 593px
+                flex-wrap: wrap
+                gap: 80px
+
+
+                .block
+                    width: 256px
+                    h1
+                        font-family: "Steelfish", sans-serif
+                        font-weight: 800
+                        font-size: 60px
+                        text-transform: uppercase
+                        color: #ca252a
+
+                    p
+                        font-family: "Inter", system-ui
+                        font-weight: 500
+                        font-size: 22px
+                        line-height: 180%
+                        color: #020204
+                        margin-top: 20px
+
+    .questions
+        width: 100%
+        background: #F0EFEC
+        padding-left: 80px
+
+
+    .goals
+        display: flex
+        flex-direction: column
+
+        justify-content: center
+        align-items: flex-start
+        padding: 150px 80px
+
+        background: #f0efec
+        
+        // height: 90s 0px
+
+        .title
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 120px
+            text-transform: uppercase
+            color: #ca252a
+
+        .par
+            font-family: "Inter", system-ui
+            font-weight: 500
+            font-size: 22px
+            line-height: 180%
+            color: #020204
+            margin-top: 100px
+
+        .schedule
+            margin-top: 100px
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 120px
+            text-transform: uppercase
+            color: #020204
+
+        .dates
+            display: flex
+            flex-direction: row
+
+            justify-content: center
+            align-items: flex-start
+            margin-top: 100px
+
+            .mobileStrelka
+                display: none
+            .date
+                display: flex
+                flex-direction: column
+
+                justify-content: flex-start
+                align-items: flex-start
+                width: 369px
+
+                
+
+                .title
+                    font-size: 47px
+                .subTitle
+                    margin-top: 24px
+                    font-family: "Steelfish", sans-serif
+                    font-weight: 400
+                    font-size: 35px
+                    text-transform: uppercase
+                    color: #020204
+
+                p
+                    margin-top: 16px
+                    font-family: "Inter", system-ui
+                    font-weight: 400
+                    font-size: 18px
+                    line-height: 180%
+                    color: #020204
+
+                
+                    
+
+            img
+                margin-left: 56px
+
+    .redBlock 
+        padding: 150px 80px 150px 0
+        width: 100%
+        height: 464px
+        background: #ca252a
+
+        .title
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 120px
+            text-transform: uppercase
+            color: #fff
+            margin-left: 80px
+
+        .par
+            font-family: "Inter", system-ui
+            font-weight: 400
+            font-size: 22px
+            line-height: 180%
+            width: 90%
+            color: #fff
+            margin-top: 100px
+            margin-left: 80px
+
+
+    .criterion
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: flex-start
+
+        padding: 120px 80px
+                    
+
+    .joury
+        background: white
+        
+
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: flex-start
+
+        margin-left: -80px
+
+
+    .organizers
+        display: flex
+        flex-direction: column
+
+        justify-content: center
+        align-items: center
+        width: 100%
+
+        .title
+            margin-top: 150px
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 120px
+            text-transform: uppercase
+            text-align: center
+            color: #020204
+
+        .citation
+            display: flex
+            margin-top: 80px
+            flex-direction: row
+
+            justify-content: center
+            align-items: center
+            width: 100%
+            gap: 24px
+            p
+                font-weight: 400
+                width: 757px
+                text-align: center
+                
+
+        
+        .mainPerson
+            display: flex
+            flex-direction: column
+
+            justify-content: center
+            align-items: center
+
+            gap: 16px
+            margin-top: 80px
+
+            padding-bottom: 80px
+            border-bottom: 1.50px solid rgba(2, 2, 4, 0.1)
+            width: 1052px
+
+
+            h5
+                font-family: "Steelfish", sans-serif
+                font-weight: 800
+                font-size: 35px
+                text-transform: uppercase
+                text-align: center
+                
+                color: #020204
+
+            p
+                font-family: "Inter", system-ui
+                font-weight: 400
+                font-size: 18px
+                
+                line-height: 120%
+                text-align: center
+                color: #020204
+
+        .persons
+            display: flex
+            flex-direction: row
+
+            justify-content: space-around
+            align-items: flex-start
+
+
+            width: 1052px
+            flex-wrap: wrap
+            gap: 70px
+
+
+            .person
+                width: 233px    
+                display: flex
+                flex-direction: column
+
+                justify-content: center
+                gap: 16px
+                align-items: center
+                margin-top: 80px
+
+                h5
+                    font-family: "Steelfish", sans-serif
+                    font-weight: 800
+                    font-size: 35px
+                    text-transform: uppercase
+                    text-align: center
+                    color: #020204
+                    white-space: nowrap
+
+                p
+                    text-align: center
+                    font-family: "Inter", system-ui
+                    font-weight: 400
+                    width: 210px
+                    font-size: 15px
+
+
+    .partners
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: flex-start
+        
+        margin-top: 120px
+        width: 1082px
+        
+        background: #f0efec
+
+        padding-bottom: 120px
+        padding: 120px 80px
+
+        
+        .title
+            margin: 0
+            font-size: 120px
+            font-weight: 800
+            font-family: Steelfish
+            color: #ca252a
+            
+
+        .par    
+            margin-top: 50px
+            line-height: 39.6px
+            font-size: 22px
+
+            font-weight: 400
+            font-family: "Inter", system-ui
+            
+        .row
+            margin-top: 100px
+
+
+@media screen and ( max-width:  1000px)
+    .container
+        align-items: center
+        p
+            font-size: 16px
+
+        .crumbs
+            display: none
+
+        .joury
+            margin-left: -50px
+
+        .about
+            margin: 20px 0 0 0
+            width: 90%
+
+            h1
+                font-size: 80px
+                text-align: center
+                
+            p
+                text-align: center
+                
+
+        .history    
+            width: 90%
+            padding: 0
+
+            flex-direction: column
+
+            gap: 80px
+            margin-top: 50px
+
+            .left, .right
+                gap: 25px
+                align-items: center
+                h1
+                    font-size: 80px
+                    
+
+                p
+                    width: 100%
+                    text-align: center
+                    
+
+                .blocks
+
+                    width: 100%
+                    gap: 10%
+                    padding-bottom: 50px
+
+                    .block 
+                        width: 100%
+                        margin-top: 20px
+
+                        h1
+                            font-size: 60px
+                            text-align: center
+
+                        p
+                            font-size: 16px
+                            text-align: center
+                            line-height: 140%
+                            width: 100%
+
+        .goals
+            padding: 0
+            align-items: center
+            width: 100%
+
+            .dates
+                .desktopArrow
+                    display: none
+                    
+                .mobileStrelka
+                    display: flex
+
+
+            .title
+                margin-top: 30px
+                font-size: 70px
+
+            .par
+                margin-top: 40px
+                text-align: center
+                width: 95%
+                
+                font-size: 18px
+
+            .schedule
+                margin-top: 40px
+                font-size: 80px
+
+            .dates
+                flex-direction: column
+                margin-top: 20px
+                padding-bottom: 50px
+
+                .date
+                    width: 100%
+                    margin: 0  !important
+                        
+                    
+
+                img
+                    margin: 10px
+
+            .date1
+                margin-top: 30px
+
+                .title
+                    margin-top: 30px
+                    font-size: 70px
+
+                .par
+                    margin-top: 40px
+                    text-align: center
+                    width: 95%
+                    
+                    font-size: 18px
+
+        .redBlock
+            padding: 0
+
+            display: flex
+            flex-direction: column
+
+            justify-content: center
+            align-items: center
+
+            width: 100%
+            height: auto
+            padding-top: 20px
+            .title
+                font-size: 50px
+                margin: 0
+                margin-top: 20px
+
+            .par
+                margin: 0
+                margin-bottom: 40px
+                margin-top: 30px
+
+                font-size: 18px
+                text-align: center
+
+
+        .joury
+            margin-left: 0
+
+        .criterion
+            padding: 0
+            width: 100%
+
+            justify-content: center
+            align-items: center
+
+            margin-top: 30px
+
+            .title
+                font-size: 70px
+
+            .par
+                font-size: 18px
+                margin-top: 30px
+                width: 95%
+                text-align: center
+
+            .row
+                width: 95%
+                justify-content: flex-start
+                align-items: flex-start
+
+            .blocks
+                flex-direction: column
+                width: 100%
+
+                justify-content: center
+                align-items: center
+
+                .block
+                    width: 90%
+                    padding: 20px
+                    height: auto
+
+                    .title
+                        margin: 0px 0 0 15px
+                        text-align: left
+
+                    .list
+                        width: 100%
+                        margin: 25px 0 0 15px
+
+                    button
+                        margin: 25px 0 0 15px
+                        color: black
+                        border: 1px solid #CA252A
+        .popup 
+            width: 90%
+            left: 50%
+            top: 51%
+            transform: translate(-50%, -50%)  // Центрируем по горизонтали и вертикали
+            padding: 20px
+            position: fixed  // Убедитесь, что позиционирование остаётся fixed для модальных окон
+            z-index: 100
+            
+
+            .topSide, .topMobileSide
+                // margin-top: 120px
+                .right
+                    justify-content: center
+                    align-items: center
+                    gap: 20px
+
+                    button
+                        color: #fff
+                        border: none
+                        margin: 0
+                        height: 40px
+                        font-size: 16px 
+        .jouryParent
+            width: 100%
+
+        .organizers
+            width: 100%
+
+            .title
+                margin-top: 70px
+
+            .citation
+                gap: 10px
+                width: calc( 100% - 48px )
+                margin-top: 40px
+                img
+                    width: 20px
+
+                p
+                    width: 80%
+                    
+            .mainPerson
+                width: 90%
+                padding-bottom: 40px
+
+            .persons
+                flex-direction: column
+                width: 100%
+
+                align-items: center
+                gap: 0px
+                padding-bottom: 50px
+
+        .questions
+            width: 100%
+
+            display: grid
+            place-items: center
+            background: #F0EFEC
+            padding: 0
+
+        .partners
+            width: 100%
+            padding: 0
+            align-items: center
+
+            .title
+                margin-top: 50px
+                font-size: 70px
+
+            .par
+                text-align: center
+                width: 95%
+                font-size: 18px
+
+            .row
+                display: none
+
+            .rowDiv
+                display: flex
+                overflow-x: scroll
+                width: 90%
+
+@media screen and ( max-width:  700px)
+    .container
+        
+        .criterion
+            .blocks
+                width: 90%
+                .block
+                    width: 90% !important
+
+                    .title, .list, button
+                        margin-left: 0
+                    
+                        
+                    
+                
+    
+        .popup
+            width: 85%
+            justify-content: flex-start
+            align-items: center
+            height: 500px
+            overflow-y: scroll
+            overflow-x: hidden
+            
+            border-radius: 10px
+            padding: 10px
+            padding-bottom: 50px
+            
+            .topSide
+                display: none
+
+            .topMobileSide
+                display: flex
+                flex-direction: column
+                width: 100%
+                // height: 200px
+                
+                
+                // position: fixed
+                margin-top: 0px
+                // background: red
+                
+                
+                
+
+                .top
+                    display: flex
+                    flex-direction: row
+                    justify-content: space-between
+                    align-items: center
+                    // position: relative
+                    
+
+                    
+
+                    img
+                        width: 40px
+                        margin-right: 10px
+
+                button
+                    border: none !important
+                    background: #ca252a !important
+                    color: white !important
+                    
+                    
+
+                
+
+                    
+            .mainSide
+                margin-top: 30px
+                
+
+
+
+                .information
+                    margin-bottom: 30px

@@ -1,0 +1,125 @@
+@font-face 
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+
+@font-face 
+    font-family: 'gilroy'
+    src: url('../../components/fonts/Gilroy/Gilroy-Regular.ttf')
+    
+    
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: center
+    align-items: center
+
+    width: 100%
+
+    .innerContainer
+        width: 1000px
+
+        display: flex
+        flex-direction: column
+
+        justify-content: center
+        align-items: center
+
+    .title
+        font-family: "Steelfish", sans-serif
+        font-weight: 800
+        font-size: 47px
+        text-transform: uppercase
+        color: #020204
+        margin-top: 50px
+        padding-bottom: 40px
+        border-bottom: 1.50px solid rgba(2, 2, 4, 0.1)
+        width: 100%
+
+
+
+    .packets
+        display: flex
+        flex-direction: row
+
+        justify-content: space-between
+        align-items: center
+
+        width: 100%
+        margin-top: 78px
+
+        margin-bottom: 100px
+
+        .packet
+            width: 190px
+            height: 177px
+
+            display: flex
+            flex-direction: column
+
+            justify-content: flex-start
+            align-items: flex-start
+
+            .price
+                font-family: "Steelfish", sans-serif
+                font-weight: 800
+                font-size: 49px
+                text-transform: uppercase
+                color: #ca252a
+                white-space: nowrap
+
+            .value
+                font-family: Gilroy
+                font-weight: 500
+                font-size: 22px
+                line-height: 120%
+                color: #020204
+                margin-top: 17px
+
+            button
+                background: #020204
+                width: 190px
+                margin-top: 27px
+                height: 48px
+
+                font-family: "Montserrat", sans-serif
+                font-weight: 800
+                font-size: 16px
+                text-transform: uppercase
+                color: #fff
+                cursor: pointer
+                border: none
+
+
+    .questions
+        display: grid
+        place-items: center
+
+        width: 100%
+        background-color: #F0EFEC
+
+
+@media screen and ( max-width:  1000px)
+    .container
+        .innerContainer
+            width: 90%
+
+        .packets
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            margin-top: 20px
+            width: 100%
+            
+
+            .packet
+                width: 100%
+                height: 200px
+                padding-top: 25px
+                border-top: 1px solid #11111132
+                justify-content: center
+                align-items: center
+                padding-bottom: 20px
+
+                &:first-child
+                    border: none

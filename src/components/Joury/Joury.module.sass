@@ -1,0 +1,137 @@
+.joury
+    padding-top: 120px
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    align-items: flex-start
+    background: white
+    width: 100%
+    overflow: hidden
+
+    .title
+        margin: 0
+        font-size: 120px
+        font-weight: 800
+        font-family: Steelfish
+        text-align: left
+        margin-left: 80px
+
+    .par    
+        margin-top: 50px
+        line-height: 39.6px
+        font-size: 22px
+        font-weight: 400
+        font-family: "Inter", system-ui
+        text-align: center
+        max-width: 90%
+        margin-left: 80px
+        text-align: left
+
+    .buttons
+        margin-top: 40px
+        display: flex
+        justify-content: space-between
+        gap: 20px
+        margin-left: 80px
+
+        .leftBtn, .rightBtn
+            cursor: pointer
+            width: 64px
+
+        .leftBtn
+            transform: rotate(180deg)
+
+    .peoples
+        position: relative
+        display: flex
+        width: 100%
+        height: 500px
+        overflow: hidden
+        margin-top: 60px
+        margin-left: 80px
+        
+        .block
+            position: absolute
+
+            top: 0
+            left: 0
+            width: 35.66%
+            height: 100%
+            display: flex
+            flex-direction: column
+            justify-content: flex-start
+            align-items: flex-start
+            transition: transform 0.5s ease-in-out
+            cursor: pointer
+            img
+                width: 233px
+                height: 350px
+                object-fit: cover
+            h4
+                font-family: 'Steelfish'
+                font-weight: 800
+                font-size: 35px
+                margin: 16px 0 0 0
+                text-transform: uppercase
+            p
+                margin: 16px 0 0 0
+
+        &.active
+            transform: translateX(0%)
+
+@media screen and (max-width: 1024px)
+    .joury
+        padding-left: 16px
+        padding-top: 0
+        
+        .title
+            font-size: 80px
+            margin-top: 60px
+        .par
+            font-size: 18px
+            line-height: 30px
+            margin-top: 40px
+
+    .buttons 
+        z-index: 2
+        
+        .peoples
+            height: 400px
+            margin-left: 16px
+            
+            .block
+                img
+                    width: 180px
+                    height: 280px
+                h4
+                    font-size: 28px
+
+@media screen and (max-width: 767px)
+    .joury
+        margin-left: 16px
+        height: 950px
+        align-items: flex-start
+        width: 90%
+        .title
+            font-size: 60px
+            color: #ca252a
+            margin-left: 0
+            
+        .par
+            font-size: 16px
+            line-height: 26px
+            margin-left: 0
+            text-align: left
+
+        .buttons
+            margin-left: 0
+        .peoples
+            height: 500px
+            margin-left: 0px
+            .block
+                width: 105.66%
+                img
+                    width: 233px
+                    height: 350px
+                h4
+                    font-size: 35px

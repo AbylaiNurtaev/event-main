@@ -1,0 +1,533 @@
+@font-face
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: flex-start
+    align-items: flex-start
+
+    width: 100%
+
+    background: white
+    p
+        font-family: "Inter", system-ui
+        font-weight: 600
+        font-size: 18px
+        cursor: pointer
+
+    .crumbs
+        text-align: left
+        margin: 50px 0 0 80px
+        display: flex
+        flex-direction: row
+        gap: 16px
+
+    .about
+        margin: 50px 0 0 80px
+        padding-bottom: 50px
+        border-bottom: 1px solid black
+        width: 85%
+        h1
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 120px
+            text-transform: uppercase
+            color: #ca252a
+
+        p
+            font-family: "Inter", system-ui
+            font-weight: 500
+            font-size: 22px
+            line-height: 180%
+            margin-top: 50px
+            width: 90%
+
+            color: #020204
+
+    .criterion
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: flex-start
+
+        padding: 120px 80px
+
+        .title
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 120px
+            text-transform: uppercase
+            color: #020204
+
+        .par
+            font-family: "Inter", system-ui
+            font-weight: 400
+            font-size: 22px
+            line-height: 180%
+            color: #020204
+            margin-top: 50px
+            cursor: auto
+
+        .row
+            display: flex
+            flex-direction: row
+
+            justify-content: flex-start
+            align-items: flex-start
+
+            overflow-x: scroll
+            gap: 20px
+            margin-top: 50px
+            width: 1052px
+
+            h5
+                font-family: "Steelfish", sans-serif
+                padding-bottom: 20px
+                font-weight: 700
+                font-size: 32px
+                text-transform: uppercase
+                white-space: nowrap
+                color: rgba(2, 2, 4, 0.3)
+                cursor: pointer
+
+            .active
+                color: black
+
+        .blocks
+            display: flex
+            flex-direction: row
+
+            justify-content: flex-start
+            align-items: stretch
+
+            flex-wrap: wrap
+            width: 100%
+            margin-top: 20px
+            gap: 40px
+            padding-bottom: 130px
+
+            .block
+
+                border: 1.50px solid #020204
+                padding: 32px
+
+                width: 35% !important
+                // flex: 1
+                // height: 505px
+                display: flex
+                flex-direction: column // Это важно, чтобы содержимое не нарушало структуру
+                flex-grow: 1
+
+                .title
+                    font-family: "Steelfish", sans-serif
+                    font-weight: 800
+                    font-size: 47px
+                    text-transform: uppercase
+                    color: #020204
+
+                .list
+                    width: 100%
+
+                    display: flex
+                    flex-direction: column
+
+                    justify-content: flex-start
+                    align-items: flex-start
+                    gap: 16px
+                    margin-top: 32px
+
+                    .par1
+                        font-family: "Inter", system-ui
+                        font-weight: 400
+                        font-size: 18px
+                        line-height: 180%
+                        color: #020204
+                        width: 100%
+
+                button
+                    border: 1.50px solid #ca252a
+
+                    width: 144px
+                    height: 52px
+                    font-family: "Inter", system-ui
+                    font-weight: 800
+                    background: white
+                    cursor: pointer
+                    margin-top: 32px
+
+    .shadow
+        position: fixed
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background-color: rgba(0, 0, 0, 0.574)
+        z-index: 0
+
+    .popup
+        display: flex
+        z-index: 1
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: center
+
+        position: fixed
+        top: 10px
+
+        width: 1012px
+        height: 684px
+
+        background: white
+
+        padding: 50px
+        left: 350px
+        overflow: scroll !important
+
+        .topMobileSide
+            display: none
+
+        .topSide
+            display: flex
+            flex-direction: row
+
+            width: 100%
+
+            justify-content: space-between
+            align-items: center
+
+            .title
+                font-size: 47px
+
+            .right
+                display: flex
+                flex-direction: row
+
+                justify-content: center
+                align-items: center
+
+                button
+                    width: 217px
+                    height: 70px
+                    background: #ca252a !important
+                    font-family: "Montserrat", sans-serif
+                    font-weight: 800
+                    font-size: 18px
+                    color: #fff
+                    border: none
+
+                    cursor: pointer
+                    margin: 0
+                    margin-right: 50px
+                img
+                    cursor: pointer
+
+        .mainSide
+            display: flex
+            flex-direction: column
+
+            justify-content: center
+            align-items: center
+
+            width: 100%
+
+            .peoples
+
+                background: white
+                display: flex
+                flex-direction: row
+
+                justify-content: flex-start
+                align-items: flex-start
+
+                flex-wrap: nowrap
+
+                gap: 5px
+
+                transition: .5s
+                width: 100%
+                overflow-x: scroll
+                margin-top: 10px
+                padding-bottom: 20px
+
+                .block
+                    display: flex
+                    flex-direction: column
+
+                    justify-content: flex-start
+                    align-items: flex-start
+
+                    width: 233px
+                    height: 456px
+                    cursor: pointer
+                    border: none
+                    margin: 0
+                    padding: 0
+
+                    img
+                        width: 233px
+                        height: 350px !important
+
+                        display: block
+                        aspect-ratio: 233 / 350
+                        object-fit: cover
+
+                    h4
+                        font-family: 'Steelfish'
+                        font-weight: 800
+                        font-size: 35px
+                        padding: 16px 0 0 0
+                        text-transform: uppercase
+
+                    p
+                        margin: 16px 0 0 0
+
+            .title
+                text-transform: uppercase
+                color: #ca252a
+                font-size: 35px
+                width: 100%
+                text-align: left
+                padding-bottom: 24px
+                border-bottom: 1.50px solid rgba(2, 2, 4, 0.1)
+                margin-top: 50px
+
+            .information
+                font-family: "Montserrat", sans-serif
+                font-weight: 500
+                font-size: 18px
+                line-height: 180%
+                color: #020204
+                width: 100%
+
+                .par
+                    font-family: "Montserrat", sans-serif
+                    font-weight: 400
+                    font-size: 18px
+                    line-height: 180%
+                    color: #020204
+                    width: 100%
+
+            .should
+                display: flex
+                flex-direction: row
+
+                justify-content: space-between
+                align-items: center
+
+                margin-top: 40px
+                gap: 32px
+                width: 100%
+
+                .block
+                    padding: 0
+                    display: flex
+                    flex-direction: column
+
+                    justify-content: flex-start
+                    align-items: flex-start
+
+                    gap: 16px
+                    border: none
+
+                    .bold, .par
+                        font-family: "Montserrat", sans-serif
+                        font-weight: 700
+                        font-size: 18px
+                        color: #020204
+                        width: 100%
+
+                    .par
+                        font-weight: 500
+                        margin-top: 0
+
+    .questions
+        width: 100%
+        background: #F0EFEC
+        padding-left: 80px
+
+@media screen and ( max-width:  1530px)
+
+.container
+    .criterion
+        .blocks
+            .block
+                width: 40%
+
+@media screen and ( max-width:  1000px)
+    .container
+        justify-content: flex-start
+        align-items: flex-start
+
+        .crumbs
+            display: none
+
+        .about
+            margin: 0
+            width: 100%
+            display: grid
+            place-items: center
+
+            h1
+                font-size: 70px
+                text-align: center
+
+                margin-top: 30px
+
+            p
+
+                width: 100%
+                margin-top: 20px
+                text-align: center
+                width: 95%
+
+        .criterion
+            padding: 0
+            align-items: center
+            width: 100%
+
+            .title
+                font-size: 70px
+                margin-top: 50px
+                text-align: center
+
+            .par
+                margin-top: 20px
+                width: 100%
+                text-align: center
+
+            .row
+                width: 95%
+
+            .blocks
+                flex-direction: column
+                width: 100%
+
+                justify-content: center
+                align-items: center
+
+                .block
+                    width: 90%
+                    padding: 20px
+                    height: auto
+
+                    .title
+                        margin: 0px 0 0 15px
+                        text-align: left
+
+                    .list
+                        width: 100%
+                        margin: 25px 0 0 15px
+
+                    button
+                        margin: 25px 0 0 15px
+                        color: black
+                        border: 1px solid #CA252A
+
+        .questions
+            width: 100%
+
+            display: grid
+            place-items: center
+            background: #F0EFEC
+            padding: 0
+
+        .popup
+            width: 90%
+            left: 50%
+            top: 51%
+            transform: translate(-50%, -50%) // Центрируем по горизонтали и вертикали
+            padding: 20px
+            position: fixed // Убедитесь, что позиционирование остаётся fixed для модальных окон
+            z-index: 100
+
+            .topSide, .topMobileSide
+                margin-top: 120px
+                .right
+                    justify-content: center
+                    align-items: center
+                    gap: 20px
+
+                    button
+                        color: #fff
+                        border: none
+                        margin: 0
+                        height: 40px
+                        font-size: 16px
+
+            .mainSide
+                .should
+                    .block
+                        .par
+                            text-align: left
+                            font-size: 14px
+
+@media screen and ( max-width:  700px)
+    .container
+
+        .criterion
+            .blocks
+                width: 90%
+                .block
+                    width: 90% !important
+
+                    .title, .list, button
+                        margin-left: 0
+
+        .popup
+            width: 85%
+            justify-content: flex-start
+            align-items: center
+            height: 500px
+            overflow-y: scroll
+            overflow-x: hidden
+            border-radius: 10px
+            padding: 10px
+            padding-bottom: 50px
+            // left: 0
+            .topSide
+                display: none
+
+            .topMobileSide
+                display: flex
+                flex-direction: column
+                width: 100%
+                // height: 200px
+
+                // position: fixed
+                margin-top: 0px
+                // background: red
+
+                .top
+                    display: flex
+                    flex-direction: row
+                    justify-content: space-between
+                    align-items: center
+                    // position: relative
+
+                    img
+                        width: 40px
+                        margin-right: 10px
+
+                button
+                    border: none !important
+                    background: #ca252a !important
+                    color: white !important
+
+            .mainSide
+                margin-top: 30px
+
+                .information
+                    margin-bottom: 30px
+
+                .should
+                    flex-direction: column
+                    gap: 30px
+                    margin-top: 20px
+
+                    .block
+                        height: auto

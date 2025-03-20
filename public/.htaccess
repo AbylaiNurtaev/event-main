@@ -1,0 +1,10 @@
+Options -MultiViews
+RewriteEngine On
+RewriteBase /
+
+# Если файл или директория существует, не перезаписывайте
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Перенаправьте все запросы на index.html
+RewriteRule ^ index.html [QSA,L]

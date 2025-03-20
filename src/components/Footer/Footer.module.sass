@@ -1,0 +1,113 @@
+.container
+    display: flex
+    flex-direction: row
+
+    justify-content: space-between
+    align-items: center
+
+    width: calc(100vw - 480px) 
+    
+
+    padding: 50px 90px
+    background: black
+
+    height: 74px
+    gap: 100px
+    
+
+    .left, .right
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: flex-start
+
+        width: 476px
+        height: 74px
+        gap: 24px
+
+        .top, .bottom
+            font-family: "Inter", system-ui
+            font-weight: 600
+            font-size: 14px
+            line-height: 180%
+            color: #f0efec
+
+            display: flex
+            flex-direction: row
+            gap: 16px
+
+        .bottom
+            font-weight: 400
+
+            .partnerBtn
+                border: none
+                background: white
+
+                color: black
+                font-family: "Inter", system-ui
+                cursor: pointer
+                width: 130px
+                height: 25px
+
+                font-weight: bolder
+            img
+                cursor: pointer
+
+    
+    .right
+        align-items: flex-end
+
+
+@media screen and ( max-width:  1350px)
+    .container
+        // padding: 20px 40px
+        
+        .left, .right
+            width: 200px
+            .top, .bottom
+                line-height: 100%        
+                white-space: nowrap
+
+        .left
+            .top
+                flex-direction: column
+                p
+                    &:nth-child(2)
+                        display: none
+                        
+
+@media screen and ( max-width:  1000px)
+    .container
+        width: 100%
+        height: 487px
+        flex-direction: column  
+        padding: 0 0px 50px 0px
+        overflow-x: hidden
+
+        .left, .right
+            width: 358px
+
+        .right
+            height: auto
+            .top
+                display: flex
+                flex-direction: column
+                text-align: right
+                p   
+                    margin-top: 16px
+
+                    &:nth-child(2), &:nth-child(4)
+                        display: none
+            .bottom
+                margin-top: 24px
+                gap: 32px
+
+        .left
+            margin-top: 50px
+
+            .top
+                gap: 20px
+            
+            .bottom
+                margin-top: 24px

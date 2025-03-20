@@ -1,0 +1,73 @@
+@font-face 
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+
+@font-face 
+    font-family: 'gilroy'
+    src: url('../../components/fonts/Gilroy/Gilroy-Regular.ttf')
+    
+
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: center
+    align-items: center
+
+    width: 100%
+
+    h1
+        font-family: steelfish
+        width: 100%
+
+        text-align: left
+        margin-left: 40px
+        font-size: 50px
+        margin-top: 50px
+
+    .applications
+        margin-left: 40px
+        margin-top: 120px
+        background: white
+        display: flex
+        flex-direction: row
+
+        justify-content: flex-start
+        align-items: center
+
+        flex-wrap: wrap
+
+        gap: 40px
+        
+        padding-bottom: 120px
+
+        
+        transition: .5s
+        width: 100%
+
+        .application
+            display: flex
+            flex-direction: column
+
+            justify-content: flex-start
+            align-items: flex-start
+
+            width: 233px
+            height: 456px
+            cursor: pointer
+
+            img
+                width: 233px
+                height: 350px
+
+                object-fit: cover
+
+            h4
+                font-family: 'Steelfish'
+                font-weight: 800
+                font-size: 35px
+                margin: 16px 0 0 0
+                text-transform: uppercase
+
+            p
+                margin: 16px 0 0 0

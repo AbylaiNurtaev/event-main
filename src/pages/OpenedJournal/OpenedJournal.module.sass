@@ -1,0 +1,108 @@
+@font-face 
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+
+@font-face 
+    font-family: 'gilroy'
+    src: url('../../components/fonts/Gilroy/Gilroy-Regular.ttf')
+    
+    
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: center
+    align-items: center
+    width: 100%
+
+    .innerContainer
+        display: flex
+        flex-direction: column
+
+        justify-content: center
+        align-items: center
+
+        width: 700px
+
+        .crumbs
+            text-align: left
+            display: flex
+            flex-direction: row
+            gap: 16px
+            
+            cursor: pointer
+            width: 100%
+
+            margin-top: 20px
+
+            p
+                font-family: "Inter", system-ui
+                font-weight: 500
+                font-size: 18px
+                line-height: 180%
+                
+            
+                color: #020204
+
+        .title
+            margin-top: 40px
+            font-family: "Steelfish", sans-serif
+            font-weight: 800
+            font-size: 80px
+            text-transform: uppercase
+            color: #020204
+            width: 100%
+            text-align: left
+
+        .par
+            padding-bottom: 40px
+            border-bottom: 1.50px solid rgba(2, 2, 4, 0.8)
+            width: 100%
+            text-align: left
+            font-family: 'gilroy'
+            color: rgba(2, 2, 4, 0.5)
+            font-size: 18px
+            margin-top: 32px
+
+        .content
+            width: 100%
+            text-align: left
+            font-family: 'gilroy'
+            margin-top: 32px
+            margin-bottom: 30px
+
+            p
+                font-family: gilroy
+
+
+        .share 
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+
+            gap: 10px
+            background: none
+
+            border: none
+            cursor: pointer
+            margin-bottom: 30px
+
+            font-size: 18px
+            img
+                width: 20px
+
+
+@media screen and ( max-width:  700px)
+    .container
+        .innerContainer
+            width: 90%
+            .crumbs 
+                display: none
+
+            .title
+                font-size: 30px
+
+            iframe
+                width: 90%
+    

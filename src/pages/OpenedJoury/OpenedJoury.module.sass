@@ -1,0 +1,240 @@
+@font-face 
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+
+@font-face 
+    font-family: 'gilroy'
+    src: url('../../components/fonts/Gilroy/Gilroy-Regular.ttf')
+    
+    
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: center
+    align-items: center
+    width: 100%
+
+    .innerContainer
+        display: flex
+        flex-direction: column
+
+        justify-content: center
+        align-items: center
+
+        width: 90%
+
+        .top
+            display: flex
+            flex-direction: row
+
+            justify-content: space-between
+            align-items: center
+
+            padding-bottom: 34px
+            border-bottom: 1.50px solid rgba(2, 2, 4, 0.8)
+            margin-top: 50px
+
+            width: 100%
+
+            .crumbs
+                text-align: left
+                display: flex
+                flex-direction: row
+                gap: 16px
+                
+                cursor: pointer
+
+                p
+                    font-family: "Inter", system-ui
+                    font-weight: 500
+                    font-size: 18px
+                    line-height: 180%
+                    
+                
+                    color: #020204
+
+        .mainSide
+            display: flex
+            flex-direction: row
+
+            justify-content: space-between
+            align-items: center
+
+            width: 100%
+            margin-top: 60px
+
+            .left
+                display: flex
+                flex-direction: column
+
+                justify-content: flex-start
+                align-items: flex-start
+                width: 60%
+                // background: red
+
+                .title
+                    font-family: "Steelfish", sans-serif
+                    font-weight: 800
+                    font-size: 100px
+                    text-transform: uppercase
+                    color: #000
+
+                .nomination
+                    font-family: "Gilroy", sans-serif
+                    font-weight: 500
+                    font-size: 25px
+                    line-height: 160%
+                    color: #020204
+
+                    padding-bottom: 33px
+                    border-bottom: 1.50px solid rgba(2, 2, 4, 0.22)
+
+                .soc, .socialMedia
+                    font-family: "Gilroy", sans-serif
+                    font-weight: 500
+                    font-size: 16px
+                    line-height: 250%
+                    color: rgba(2, 2, 4, 0.4)
+
+                .socialMedia
+                    color: #020204
+                    line-height: 200%
+                    text-decoration: underline
+                    cursor: pointer
+
+                .about
+                    margin-top: 35px
+                    font-family: "Gilroy", sans-serif
+
+            .right
+                width: 35%
+                display: flex
+                flex-direction: column
+                justify-content: flex-start
+                align-items: flex-start
+                img
+                    width: 100%
+
+        .projectsSide
+            display: flex
+
+            flex-direction: column
+
+            justify-content: flex-start
+            align-items: flex-start
+            
+            margin-top: 100px
+            width: 100%
+            .title
+                font-family: "Steelfish", sans-serif
+                font-weight: 800
+                font-size: 120px
+                text-transform: uppercase
+                color: #000
+
+            .projects
+                display: flex
+                flex-direction: row
+
+                flex-wrap: wrap
+                justify-content: flex-start
+                align-items: flex-start
+                margin-top: 20px
+
+                gap: 2%
+
+                width: 100%
+                padding-bottom: 20px
+
+                .projectImageWrapper img, img
+                    width: 45%
+                    margin-top: 20px
+                    height: 320px
+                    object-fit: cover
+
+                
+            .overlay 
+                position: absolute
+                top: 0
+                left: 0
+                margin-top: 20px
+
+                width: 100%
+                
+                display: flex
+                justify-content: center
+                align-items: center
+                background-color: rgba(0, 0, 0, 0.784) // Dark overlay
+                color: white
+                font-size: 16px
+                height: 320px
+                
+                cursor: pointer
+
+            .projectImageWrapper 
+                position: relative
+                margin: 5px
+                width: 45%
+                // cursor: pointer
+
+                img 
+                    margin-top: 20px
+                    width: 100% !important
+                    
+                        
+                
+
+                &.lastImage 
+                    filter: brightness(0.7)
+
+@media screen and ( max-width:  700px)
+    .container
+        .innerContainer
+            .top
+                flex-direction: column
+                display: none
+
+            .mainSide
+                flex-direction: column
+                .left
+                    width: 90%
+
+                    justify-content: flex-start
+                    .title
+                        font-size: 60px
+                    .nomination
+                        width: 100%
+
+                    .about
+                        margin-top: 20px
+                        padding-bottom: 20px
+                        
+                .right
+                    width: 90%
+
+            .projectsSide
+                margin-top: 40px
+                width: 90%
+                .title
+                    font-size: 60px
+
+
+                .projects
+                    flex-direction: column
+                    justify-content: center
+                    align-items: center
+                    margin-top: 0
+                .projectImageWrapper img, img
+                    width: 100% !important
+                    
+                .projectImageWrapper 
+                    position: relative
+                    margin: 5px
+                    width: 100% !important
+                    // cursor: pointer
+
+                    img 
+                        margin-top: 20px
+                        width: 100% !important
+                        

@@ -1,0 +1,136 @@
+@font-face
+    font-family: 'steelfish'
+    src: url('../../components/fonts/stelfish/steelfish.otf')
+
+.container
+    width: 100%
+
+    display: grid
+    place-items: center
+
+    margin-top: 100px
+
+    .title
+        font-family: steelfish
+        font-weight: bolder
+        font-size: 70px
+        color: #ca252a
+
+    input
+        width: 350px
+        height: 40px
+        margin-top: 20px
+
+        font-family: "Inter", sans-serif
+        font-size: 18px
+
+        &:focus
+            outline: none
+
+    button
+        margin-top: 10px
+        width: 350px
+        height: 40px
+
+        background: black
+
+        color: white
+
+        font-family: "Inter", sans-serif
+        font-weight: bolder
+        border: none
+
+        text-transform: uppercase
+        cursor: pointer
+
+    .delete
+        background: none
+        border: 2px solid black
+        color: black
+
+    .blocks
+        display: flex
+        flex-direction: column
+
+        justify-content: flex-start
+        align-items: center
+
+        margin-top: 60px
+
+        width: 70%
+
+        .block
+            padding-bottom: 15px
+            padding-top: 15px
+            border: 1px solid #11111134
+            padding: 15px
+            display: flex
+            flex-direction: column
+
+            justify-content: flex-start
+            align-items: center
+
+            gap: 25px
+            width: 100%
+
+            .top
+                display: grid
+                grid-template-columns: repeat(5, 1fr)
+                gap: 20px
+
+                align-items: center
+                width: 100%
+
+                p
+                    text-decoration: underline
+                    cursor: pointer
+                    white-space: nowrap
+
+                    width: 100%
+                    display: flex
+                    flex-direction: row
+
+                    justify-content: center
+                    align-items: center
+
+                input
+                    width: 20px
+                    margin: 0
+                    margin-right: 10px
+
+            .bottom
+                display: none
+                flex-direction: column
+
+                justify-content: flex-start
+                align-items: flex-start
+
+                width: 700px
+                height: 500px
+
+                position: fixed
+                z-index: 100
+
+                border-radius: 5px
+                box-shadow: 0px 0px 39px -7px rgba(0,0,0,0.75)
+
+                top: 5%
+                background: white
+                padding: 40px 100px 100px 100px
+
+                overflow-y: scroll
+                padding-bottom: 30px
+
+                .nominations
+                    display: flex
+                    flex-direction: row
+
+                    justify-content: center
+                    align-items: center
+
+                    gap: 20px
+                    height: 50px
+
+                    input
+                        width: 20px
+                        margin: 0

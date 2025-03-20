@@ -1,0 +1,395 @@
+.container
+    display: flex
+    flex-direction: column
+
+    justify-content: center
+    align-items: center
+
+    width: 100%
+
+    .innerContainer
+        display: flex
+        flex-direction: column
+
+        justify-content: center
+        align-items: flex-start
+
+        width: 90%
+        margin-bottom: 30px
+
+        .crumbs
+            text-align: left
+            display: flex
+            flex-direction: row
+            gap: 16px
+
+            cursor: pointer
+            margin-top: 50px
+
+            p
+                font-family: "Inter", system-ui
+                font-weight: 500
+                font-size: 18px
+                line-height: 180%
+
+                color: #020204
+
+        .mainSide
+            display: flex
+            flex-direction: row
+
+            justify-content: space-between
+            align-items: center
+
+            width: 100%
+            margin-top: 60px
+
+            border-bottom: 1.50px solid rgba(2, 2, 4, 0.8)
+
+            .left
+                display: flex
+                flex-direction: column
+
+                justify-content: flex-start
+                align-items: flex-start
+                width: 60%
+                // background: red
+
+                .title
+                    font-family: "Steelfish", sans-serif
+                    font-weight: 800
+                    font-size: 100px
+                    text-transform: uppercase
+                    color: #000
+
+                .specialization
+                    font-size: 22px
+                    font-family: "Inter", system-ui
+                    width: 100%
+                    border-bottom: 1px solid #9d9d9da9
+                    padding-bottom: 33px
+                    margin-top: 10px
+
+                .nomination
+                    font-family: "Gilroy", sans-serif
+                    font-weight: 500
+                    font-size: 25px
+                    line-height: 160%
+                    color: #020204
+
+                    padding-bottom: 33px
+                    border-bottom: 1.50px solid rgba(2, 2, 4, 0.22)
+
+                .soc, .socialMedia, .phone
+                    font-family: "Gilroy", sans-serif
+                    font-weight: 500
+                    font-size: 16px
+                    line-height: 250%
+                    color: rgba(2, 2, 4, 0.4)
+
+                .phone
+                    width: 100%
+                    border-bottom: 1px solid #38383853
+                    padding-bottom: 20px
+                    color: #020204
+
+                .soc
+                    margin-top: 20px
+
+                .socialMedia
+                    color: #020204
+                    line-height: 200%
+                    text-decoration: underline
+                    cursor: pointer
+
+                .about
+                    margin-top: 55px
+                    font-family: "Gilroy", sans-serif
+
+                .row
+                    display: flex
+                    flex-direction: row
+
+                    justify-content: center
+                    align-items: flex-start
+                    gap: 100px
+                    margin-top: 40px
+
+                    &:nth-last-child(1)
+                        padding-bottom: 60px
+
+                    .bold, .text
+                        font-size: 16px
+                        color: black
+
+                        font-family: "Inter", system-ui
+                        font-weight: 700
+                        line-height: 155%
+
+                    .text
+                        font-weight: 500
+                        // width: 374px
+                        line-height: 155%
+
+                    .bold
+
+                        width: 250px
+
+            .right
+                width: 30%
+                height: 526px
+
+                display: flex
+                flex-direction: column
+                justify-content: flex-start
+                align-items: flex-start
+                img
+                    width: 100%
+                    // object-fit: cover
+                    // height: 100%
+
+        .projects
+            display: flex
+            flex-direction: column
+
+            justify-content: center
+            align-items: center
+
+            width: 100%
+
+            .project
+                display: flex
+                flex-direction: column
+
+                justify-content: center
+                align-items: center
+
+                margin-top: 60px
+                width: 100%
+
+                .redTitle
+                    font-family: "Steelfish", sans-serif
+                    font-weight: 400
+                    font-size: 25px
+                    line-height: 160%
+                    text-transform: uppercase
+                    text-align: left
+                    width: 100%
+                    color: #ca252a
+
+                .title
+                    font-family: "Steelfish", sans-serif
+                    font-weight: 800
+                    font-size: 120px
+                    text-transform: uppercase
+                    color: #000
+                    width: 100%
+
+                .row
+                    display: flex
+                    flex-direction: row
+
+                    justify-content: flex-start
+                    align-items: flex-start
+                    gap: 100px
+                    margin-top: 40px
+                    width: 100%
+
+                    &:nth-last-child(1)
+                        padding-bottom: 60px
+
+                    .bold, .text
+                        font-size: 16px
+                        color: black
+
+                        font-family: "Inter", system-ui
+                        font-weight: 700
+                        line-height: 155%
+
+                    .text
+                        font-weight: 500
+                        width: 374px
+                        line-height: 155%
+
+                    .bold
+
+                        width: 250px
+
+        .documents
+            display: flex
+            flex-direction: column
+
+            justify-content: center
+            align-items: flex-start
+
+            h2
+                margin-top: 20px
+                font-size: 35px
+
+            .document
+                text-decoration: underline
+                margin-top: 10px
+                cursor: pointer
+
+        .projects
+            display: flex
+            flex-direction: row
+
+            flex-wrap: wrap
+            justify-content: flex-start
+            align-items: flex-start
+            margin-top: 20px
+
+            gap: 2%
+
+            width: 100%
+            padding-bottom: 20px
+
+            .projectImageWrapper img, img
+                width: 45%
+                margin-top: 20px
+                height: 320px
+                object-fit: cover
+
+        .overlay
+            position: absolute
+            top: 0
+            left: 0
+            margin-top: 20px
+
+            width: 100%
+
+            display: flex
+            justify-content: center
+            align-items: center
+            background-color: rgba(0, 0, 0, 0.784) // Dark overlay
+            color: white
+            font-size: 16px
+            height: 320px
+
+            cursor: pointer
+
+        .projectImageWrapper
+            position: relative
+            margin: 5px
+            width: 45%
+            // cursor: pointer
+
+            img
+                margin-top: 20px
+                width: 100% !important
+
+            &.lastImage
+                filter: brightness(0.7)
+
+        .videosBlock
+            display: flex
+            flex-direction: column
+
+            width: 100%
+
+            justify-content: flex-start
+            align-items: flex-start
+
+            h1
+                font-size: 30px
+
+            .videos
+
+                display: flex
+                flex-direction: row
+
+                justify-content: flex-start
+                align-items: flex-start
+
+                gap: 30px
+                width: 100%
+
+                margin-top: 40px
+
+                .video
+
+                    width: 40%
+                    cursor: pointer
+
+                    height: 300px
+                    object-fit: cover
+
+        .grading
+            display: flex
+            flex-direction: column
+
+            justify-content: flex-start
+            align-items: flex-start
+
+            margin-top: 30px
+
+            .title
+                margin-top: 30px
+
+            .main
+                p
+                    margin: 10px 0
+
+            button
+                width: 200px
+                height: 35px
+
+                background: black
+
+                border: none
+                color: white
+
+                font-weight: bolder
+                border-radius: 4px
+
+                margin-top: 30px
+
+@media screen and ( max-width:  700px)
+    .container
+        .innerContainer
+            .top
+                flex-direction: column
+                display: none
+
+            .mainSide
+                flex-direction: column
+                .left
+                    width: 90%
+
+                    justify-content: flex-start
+                    .title
+                        font-size: 60px
+                    .nomination
+                        width: 100%
+
+                    .about
+                        margin-top: 20px
+                        padding-bottom: 20px
+
+                .right
+                    width: 90%
+
+            .projectsSide
+                margin-top: 40px
+                width: 90%
+                .title
+                    font-size: 60px
+
+                .projects
+                    flex-direction: column
+                    justify-content: center
+                    align-items: center
+                    margin-top: 0
+                .projectImageWrapper img, img
+                    width: 100% !important
+
+                .projectImageWrapper
+                    position: relative
+                    margin: 5px
+                    width: 100% !important
+                    // cursor: pointer
+
+                    img
+                        margin-top: 20px
+                        width: 100% !important
