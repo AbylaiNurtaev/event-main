@@ -4,7 +4,7 @@ import axios from '../../axios';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-
+import { useNavigate } from 'react-router-dom';
 function AddJoury() {
   const [email, setEmail] = useState('');
   const [allJouries, setAllJouries] = useState([]);
@@ -12,7 +12,7 @@ function AddJoury() {
   const [selectedNominations, setSelectedNominations] = useState({});
   const [activeIndex, setActiveIndex] = useState(null);
   const [users, setUsers] = useState();
-
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get('/getJouries')
       .then(res => res.data)
@@ -179,7 +179,7 @@ function AddJoury() {
                     >
                       <div className={s.top}>
                         <p onClick={() => { activeIndex !== null ? setActiveIndex(null) : setActiveIndex(index); }}>{elem.name || "не указано имя"}</p>
-                        <p>оценил {elem?.jouryCounter} / {users && users.filter(user => elem?.acceptedNominations.map(n => n?.toLowerCase()).includes(user.nomination?.toLowerCase())).length} заявок</p>
+                        <p onClick={() => navigate(`/jouryApplications/${elem.email}`)}>оценил {elem?.jouryCounter} / {users && users.filter(user => elem?.acceptedNominations.map(n => n?.toLowerCase()).includes(user.nomination?.toLowerCase())).length} заявок</p>
                         <p>судит {elem.acceptedNominations.length} номинации </p>
                         <p>
                           <input type="checkbox" checked={elem.additionalJoury} onChange={(e) => setStatusJoury(e.target.checked, elem.email)} />

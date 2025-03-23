@@ -3,8 +3,31 @@ import s from "./AdminCheckApplication.module.sass";
 import { useNavigate, useParams } from "react-router-dom";
 import Questions from "../../components/Questions/Questions";
 import axios from "../../axios";
+import { RowsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/rows.css";
+import LightGallery from "lightgallery/react";
+
+// Импорт плагинов
+import lgZoom from "lightgallery/plugins/zoom";
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+import fjGallery from "flickr-justified-gallery";
+
+// Импорт стилей
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
 
 function AdminCheckApplication() {
+  // useEffect(() => {
+  //   fjGallery(document.querySelectorAll(".gallery"), {
+  //     itemSelector: ".gallery__item",
+  //     rowHeight: 180,
+  //     lastRow: "start",
+  //     gutter: 2,
+  //     rowHeightTolerance: 0.1,
+  //     calculateItemsHeight: false,
+  //   });
+  // }, []);
   const navigate = useNavigate();
   const { applicationId, id } = useParams();
 
@@ -46,10 +69,24 @@ function AdminCheckApplication() {
           setDocuments(data.documents || []);
           setPreviews(data.previews);
           setVideos(data.application_data.videos);
+          console.log(
+            "data.application_data.countOfProjects",
+            data.application_data.countOfProjects
+          );
 
           setAdditionalFields([]);
+          const count = data.application_data?.countOfProjects;
+
+          if (Number.isInteger(count) && count > 0) {
+            const fields = Array.from({ length: count }, (_, i) => ({
+              key: `Field ${i + 1}`,
+              value: "",
+            }));
+            setCountProjects(fields);
+          } else {
+            setCountProjects(count);
+          }
           for (let i = 0; i < data.application_data.countOfProjects; i++) {
-            setCountProjects((prev) => [{ key: "key" + i }, ...prev]);
             setAdditionalFields((prev) => [{ key: "key" + i }, ...prev]);
           }
 
@@ -82,7 +119,17 @@ function AdminCheckApplication() {
           setInstagram(data.application_data.instagram);
           setVk(data.application_data.vk);
           setYoutube(data.application_data.youtube);
+          const count = data.application_data?.countOfProjects;
 
+          if (Number.isInteger(count) && count > 0) {
+            const fields = Array.from({ length: count }, (_, i) => ({
+              key: `Field ${i + 1}`,
+              value: "",
+            }));
+            setCountProjects(fields);
+          } else {
+            setCountProjects(count);
+          }
           setTiktok(data.application_data.tiktok);
           setInfo(data.application_data.info);
           setInfoCopy(data.application_data.info);
@@ -691,6 +738,41 @@ function AdminCheckApplication() {
     // setAdditionalFields
   };
 
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(() => {
+    const loadImages = async () => {
+      const transformedPhotos = await Promise.all(
+        newPortfolio.map(async (project) => {
+          if (project.length === 0) return [];
+
+          const images = await Promise.all(
+            project.map(
+              (src) =>
+                new Promise((resolve) => {
+                  const img = new Image();
+                  img.src = src;
+                  img.onload = () =>
+                    resolve({
+                      src,
+                      width: img.naturalWidth,
+                      height: img.naturalHeight,
+                    });
+                })
+            )
+          );
+
+          return images;
+        })
+      );
+
+      setPhotos(transformedPhotos);
+    };
+
+    loadImages();
+  }, []);
+  console.log(photos, "--------");
+
   return (
     <div className={s.container}>
       <div className={s.innerContainer}>
@@ -1017,45 +1099,54 @@ function AdminCheckApplication() {
         {selectedFiles[0] && selectedFiles[0].length >= 1 && (
           <p>Загруженные файлы:</p>
         )}
-        <div className={s.previewBlock}>
+        ;
+        <LightGallery
+          plugins={[lgThumbnail]}
+          mode="lg-fade"
+          // onInit={onInit}
+          speed={500}
+          pager={true}
+          thumbnail={true}
+          galleryId={"nature"}
+          autoplayFirstVideo={false}
+          elementClassNames={s.gallery}
+          mobileSettings={{
+            controls: false,
+            showCloseIcon: false,
+            download: false,
+            rotate: false,
+          }}
+        >
+          {/* <div> */}
           {infoCopy &&
-            // infoCopy.images &&
-            // infoCopy.images === true &&
             newPortfolio[0] &&
             newPortfolio[0]?.map((file, index) => {
-              // Определяем индекс строки
               const rowIndex = Math.floor(index / 7);
-              // Определяем позицию внутри строки
               const positionInRow = index % 7;
-
-              // Логика для определения классов
               const className = positionInRow < 4 ? s.small : s.large;
-
-              // Проверяем, является ли file объектом File или строкой (ссылкой)
               const imageUrl =
                 file instanceof File ? URL.createObjectURL(file) : file;
 
+              if (imageUrl === "NEW_FILES") return null;
+
               return (
-                <div
+                <a
+                  data-lg-size="300-240"
                   key={index}
-                  className={className}
-                  style={imageUrl == "NEW_FILES" ? { display: "none" } : {}}
+                  className={`gallery__item`}
+                  data-src={imageUrl}
+                  data-sub-html={`<p>Фото ${index + 1}</p>`}
                 >
                   <img
                     src={imageUrl}
                     alt="preview"
-                    className={s.previewImage}
+                    className={"img-responsive"}
                   />
-                  <img
-                    onClick={() => deletePortfolioImage(0, index)}
-                    className={s.closeBtn}
-                    src="/images/closeBtn.svg"
-                    alt="close"
-                  />
-                </div>
+                </a>
               );
             })}
-        </div>
+          {/* </div> */}
+        </LightGallery>
         <div className={s.addDocument}>
           <div className={s.boldText}>Документы</div>
           <label htmlFor="document-input" className={s.inputBlock}>
@@ -1118,6 +1209,12 @@ function AdminCheckApplication() {
               ))}
           </ul>
         </div>
+        {photos?.[0] && photos?.[0].length > 1 && (
+          <>
+            <p>dsadsa</p>
+            <RowsPhotoAlbum photos={photos[0]} />
+          </>
+        )}
         <div className={s.videosBlock}>
           <div className={s.boldText}>Видео</div>
           {videos &&
@@ -1242,147 +1339,57 @@ function AdminCheckApplication() {
               </label>
               <p>Загруженные фотографии</p>
               <div className={s.previewBlock}>
-                {selectedFiles[index + 1] &&
-                  selectedFiles[index + 1].map((file, fileIndex) => {
-                    // Определяем индекс строки
-                    const rowIndex = Math.floor(fileIndex / 7);
-                    // Определяем позицию внутри строки
-                    const positionInRow = fileIndex % 7;
+                <LightGallery
+                  plugins={[lgThumbnail]}
+                  mode="lg-fade"
+                  // onInit={onInit}
+                  speed={500}
+                  pager={true}
+                  thumbnail={true}
+                  galleryId={"nature"}
+                  autoplayFirstVideo={false}
+                  elementClassNames={s.gallery}
+                  mobileSettings={{
+                    controls: false,
+                    showCloseIcon: false,
+                    download: false,
+                    rotate: false,
+                  }}
+                >
+                  {infoCopy &&
+                    // infoCopy.images &&
+                    // infoCopy.images === true &&
+                    newPortfolio[index + 1] &&
+                    newPortfolio[index + 1]?.map((file, index1) => {
+                      // Определяем индекс строки
+                      const rowIndex = Math.floor(index1 / 7);
+                      // Определяем позицию внутри строки
+                      const positionInRow = index1 % 7;
 
-                    // Логика для определения классов
-                    const className =
-                      positionInRow < 4
-                        ? s.small // Первые 4 изображения в каждой строке
-                        : s.large; // Последние 3 изображения в каждой строке
+                      // Логика для определения классов
+                      const className = positionInRow < 4 ? s.small : s.large;
 
-                    return (
-                      <div
-                        key={fileIndex}
-                        className={className}
-                        style={
-                          file == "NEW FILES"
-                            ? { display: "none" }
-                            : { marginTop: "20px" }
-                        }
-                      >
-                        <img
-                          src={file}
-                          alt="preview"
-                          className={s.previewImage}
-                        />
-                        <img
-                          onClick={() => {
-                            console.log("not delete");
-                          }}
-                          className={s.closeBtn}
-                          src="/images/closeBtn.svg"
-                          alt=""
-                        />
-                      </div>
-                    );
-                  })}
+                      // Проверяем, является ли file объектом File или строкой (ссылкой)
+                      const imageUrl =
+                        file instanceof File ? URL.createObjectURL(file) : file;
 
-                {infoCopy &&
-                  // infoCopy.images &&
-                  // infoCopy.images === true &&
-                  newPortfolio[index + 1] &&
-                  newPortfolio[index + 1]?.map((file, index1) => {
-                    // Определяем индекс строки
-                    const rowIndex = Math.floor(index1 / 7);
-                    // Определяем позицию внутри строки
-                    const positionInRow = index1 % 7;
-
-                    // Логика для определения классов
-                    const className = positionInRow < 4 ? s.small : s.large;
-
-                    // Проверяем, является ли file объектом File или строкой (ссылкой)
-                    const imageUrl =
-                      file instanceof File ? URL.createObjectURL(file) : file;
-
-                    return (
-                      <div
-                        key={index}
-                        style={{
-                          position: "relative",
-                          display: "inline-block",
-                          margin: "10px",
-                        }}
-                      >
-                        <img
-                          src={imageUrl}
-                          alt="preview"
-                          style={{
-                            width: "100px",
-                            height: "100px",
-                            objectFit: "cover",
-                            cursor: "pointer",
-                            borderRadius: "5px",
-                          }}
-                          onClick={() => setIsOpen(true)}
-                        />
-                        <img
-                          style={{
-                            position: "absolute",
-                            top: "5px",
-                            right: "5px",
-                            width: "20px",
-                            height: "20px",
-                            cursor: "pointer",
-                          }}
-                          src="/images/closeBtn.svg"
-                          alt="close"
-                          onClick={() => console.log("not delete")}
-                        />
-                        {isOpen && (
-                          <div
-                            style={{
-                              position: "fixed",
-                              top: 0,
-                              left: 0,
-                              width: "100vw",
-                              height: "100vh",
-                              backgroundColor: "rgba(0, 0, 0, 0.8)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              zIndex: 1000,
-                            }}
-                            onClick={() => setIsOpen(false)}
-                          >
-                            <div
-                              style={{ position: "relative" }}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <img
-                                src={imageUrl}
-                                alt="large preview"
-                                style={{
-                                  maxWidth: "90vw",
-                                  maxHeight: "90vh",
-                                  borderRadius: "10px",
-                                }}
-                              />
-                              <button
-                                onClick={() => setIsOpen(false)}
-                                style={{
-                                  position: "absolute",
-                                  top: "10px",
-                                  right: "10px",
-                                  background: "transparent",
-                                  border: "none",
-                                  color: "white",
-                                  fontSize: "24px",
-                                  cursor: "pointer",
-                                }}
-                              >
-                                ✖
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <a
+                          data-lg-size="300-240"
+                          key={index}
+                          className={`gallery__item`}
+                          data-src={imageUrl}
+                          data-sub-html={`<p>Фото ${index + 1}</p>`}
+                        >
+                          <img
+                            src={imageUrl}
+                            alt="preview"
+                            className={"img-responsive"}
+                          />
+                        </a>
+                      );
+                    })}
+                </LightGallery>
               </div>
             </div>
           ))}

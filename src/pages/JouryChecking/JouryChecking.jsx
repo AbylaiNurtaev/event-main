@@ -4,6 +4,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../axios";
 import StarRating from "../../components/StarRating/StarRating";
 
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+// Импорт стилей
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+import { RowsPhotoAlbum } from "react-photo-album";
+import "react-photo-album/rows.css";
+import LightGallery from "lightgallery/react";
+
 function JouryChecking() {
   const navigate = useNavigate();
   const { applicationId, id } = useParams();
@@ -333,24 +342,52 @@ function JouryChecking() {
               marginTop: "200px",
             }}
           >
-            {newPortfolio[0] &&
-              newPortfolio[0].map((file, index) => (
-                <img
-                  key={index}
-                  src={file}
-                  alt="preview"
-                  className={s.previewImage}
-                  onClick={() => setSelectedImage(file)}
-                  style={{
-                    cursor: "pointer",
-                    width: "300px",
-                    height: "300px",
-                    objectFit: "cover",
+            <LightGallery
+              plugins={[lgThumbnail]}
+              mode="lg-fade"
+              // onInit={onInit}
+              speed={500}
+              pager={true}
+              thumbnail={true}
+              galleryId={"nature"}
+              autoplayFirstVideo={false}
+              elementClassNames={s.gallery}
+              mobileSettings={{
+                controls: false,
+                showCloseIcon: false,
+                download: false,
+                rotate: false,
+              }}
+            >
+              {/* <div> */}
+              {newPortfolio[0] &&
+                newPortfolio[0]?.map((file, index) => {
+                  const rowIndex = Math.floor(index / 7);
+                  const positionInRow = index % 7;
+                  const className = positionInRow < 4 ? s.small : s.large;
+                  const imageUrl =
+                    file instanceof File ? URL.createObjectURL(file) : file;
 
-                    transition: "transform 0.2s ease-in-out",
-                  }}
-                />
-              ))}
+                  if (imageUrl === "NEW_FILES") return null;
+
+                  return (
+                    <a
+                      data-lg-size="300-240"
+                      key={index}
+                      className={`gallery__item`}
+                      data-src={imageUrl}
+                      data-sub-html={`<p>Фото ${index + 1}</p>`}
+                    >
+                      <img
+                        src={imageUrl}
+                        alt="preview"
+                        className={"img-responsive"}
+                      />
+                    </a>
+                  );
+                })}
+              {/* </div> */}
+            </LightGallery>
           </div>
           {selectedImage && (
             <div
@@ -398,22 +435,55 @@ function JouryChecking() {
                   ))}
                   {showAllPhotos && portfolio[elem] && (
                     <div className={s.projects}>
-                      {newPortfolio[elem + 1] &&
-                        newPortfolio[elem + 1].map((file, index) => (
-                          <img
-                            src={file}
-                            alt="preview"
-                            // className={s.previewImage}
-                            style={{
-                              width: "200px",
-                              objectFit: "contain",
-                              cursor: "pointer",
+                      <LightGallery
+                        plugins={[lgThumbnail]}
+                        mode="lg-fade"
+                        // onInit={onInit}
+                        speed={500}
+                        pager={true}
+                        thumbnail={true}
+                        galleryId={"nature"}
+                        autoplayFirstVideo={false}
+                        elementClassNames={s.gallery}
+                        mobileSettings={{
+                          controls: false,
+                          showCloseIcon: false,
+                          download: false,
+                          rotate: false,
+                        }}
+                      >
+                        {/* <div> */}
+                        {newPortfolio[elem + 1] &&
+                          newPortfolio[elem + 1]?.map((file, index) => {
+                            const rowIndex = Math.floor(index / 7);
+                            const positionInRow = index % 7;
+                            const className =
+                              positionInRow < 4 ? s.small : s.large;
+                            const imageUrl =
+                              file instanceof File
+                                ? URL.createObjectURL(file)
+                                : file;
 
-                              transition: "transform 0.2s ease-in-out",
-                            }}
-                            onClick={() => setSelectedImage(file)}
-                          />
-                        ))}
+                            if (imageUrl === "NEW_FILES") return null;
+
+                            return (
+                              <a
+                                data-lg-size="300-240"
+                                key={index}
+                                className={`gallery__item`}
+                                data-src={imageUrl}
+                                data-sub-html={`<p>Фото ${index + 1}</p>`}
+                              >
+                                <img
+                                  src={imageUrl}
+                                  alt="preview"
+                                  className={"img-responsive"}
+                                />
+                              </a>
+                            );
+                          })}
+                        {/* </div> */}
+                      </LightGallery>
                     </div>
                   )}
                 </div>

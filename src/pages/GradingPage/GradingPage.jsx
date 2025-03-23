@@ -15,6 +15,7 @@ function GradingPage() {
   const [openedNomination, setOpenedNomination] = useState(null);
 
   const [applications, setApplications] = useState(null);
+  const [jouryId, setJouryId] = useState(null);
 
   useEffect(() => {
     window.scroll({
@@ -33,6 +34,7 @@ function GradingPage() {
           if (data.status == "success") {
             setAccess(true);
             setUser(data);
+            setJouryId(data?._id);
           }
         });
     };
@@ -58,22 +60,51 @@ function GradingPage() {
               }))
             : null
         );
+        let allNominations_2 = data
+          .filter(
+            (elem) =>
+              elem?.jouryRate.map((rate) => rate?.jouryId == jouryId).length > 0
+          )
+          .map((user) =>
+            user.applications
+              ? user.applications.map((elem) => ({
+                  ...elem.application_data, // Копируем все данные из application_data
+                  userId: user._id, // Добавляем user._id как поле userId
+                  applicationId: elem.application_id, // Добавляем application_id как поле applicationId
+                  accepted: elem.accepted,
+                  avatar: user.avatarUrl,
+                  checked: true,
+                }))
+              : null
+          );
         console.log(
           allNominations
             .filter((nomination) => nomination && nomination.length >= 1)
             .flat()
         );
-        setUsers(
-          allNominations
-            .filter((nomination) => nomination && nomination.length >= 1)
-            .flat()
-        );
+        setUsers([
+          ...Array.from(
+            new Map(
+              [
+                  ...allNominations
+                  .filter((nomination) => nomination && nomination.length >= 1)
+                  .flat(),
+                  ...allNominations_2
+                  .filter((nomination) => nomination && nomination.length >= 1)
+                  .flat(),
+              ].map((item) => [item.applicationId, item])
+            ).values()
+          ),
+        ]);
       });
   }, []);
 
+  console.log("users", users);
   useEffect(() => {
     let filteredApplications = users?.filter(
       (nomination) =>
+        nomination?.nomination &&
+        openedNomination &&
         nomination.nomination.toLowerCase() == openedNomination.toLowerCase()
     );
     setApplications(filteredApplications);
@@ -199,6 +230,7 @@ function GradingPage() {
                   <img src={aplication.avatar} alt="" />
                   <h4>{aplication.fullName}</h4>
                   <p>{aplication.specialization}</p>
+                  {aplication.checked && <p style={{ color: "green" }}>Оценил</p>}
                 </div>
               ))}
             </div>

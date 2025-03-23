@@ -59,8 +59,20 @@ function ApplicationPage() {
 
           setAdditionalFields([]);
           console.log("countOFPRJ", data.application_data.countOfProjects);
+          const count = data.application_data?.countOfProjects;
+
+          if (Number.isInteger(count) && count > 0) {
+            
+            const fields = Array.from({ length: count }, (_, i) => ({
+              key: `Field ${i + 1}`,
+              value: "",
+            }));
+            setCountProjects(fields);
+          }else{
+            setCountProjects(count);
+          }
+          // setCountProjects(data.application_data.countOfProjects);
           for (let i = 0; i < data.application_data.countOfProjects; i++) {
-            setCountProjects((prev) => [{ key: "key" + i }, ...prev]);
             setAdditionalFields((prev) => [{ key: "key" + i }, ...prev]);
           }
 
@@ -99,16 +111,29 @@ function ApplicationPage() {
           setInfoCopy(data.application_data.info);
 
           setAdditionalFields(data.application_data.info.additionalFields);
-          if (
-            data.application_data.multipleSelection == true ||
-            data.application_data.multipleSelection == "true"
-          ) {
-            setCountProjects([]);
+          const count = data.application_data?.countOfProjects;
+
+          if (Number.isInteger(count) && count > 0) {
+
+            const fields = Array.from({ length: count }, (_, i) => ({
+              key: `Field ${i + 1}`,
+              value: "",
+            }));
+            setCountProjects(fields);
+          } else {
+            setCountProjects(count);
           }
+          // if (
+          //   data.application_data.multipleSelection == true ||
+          //   data.application_data.multipleSelection == "true"
+          // ) {
+          //   setCountProjects([]);
+          // }
         })
         .catch((err) => console.log(err));
     }
   }, [applicationId]);
+  console.log("COUNT COUNT", countProjects);
 
   useEffect(() => {
     const id = localStorage.getItem("id");
@@ -625,7 +650,7 @@ function ApplicationPage() {
                   videos: [...videos, ...newVideos],
                   info: infoCopy,
                   imagesCount,
-                  countOfProjects: additionalFields.length,
+                  countOfProjects: countProjects,
                   // portfolio: selectedFiles
                 },
                 application_id: `${application_id}`,
@@ -655,7 +680,7 @@ function ApplicationPage() {
                   youtube,
                   tiktok,
                   vk,
-                  countOfProjects: additionalFields.length,
+                  countOfProjects: countProjects,
                   videos: [...videos, ...newVideos],
                   info: infoCopy,
                   imagesCount,
@@ -1335,7 +1360,8 @@ function ApplicationPage() {
           </div>
         )}
         {additionalFields &&
-          countProjects.map((elem, index) => (
+          countProjects &&
+          countProjects?.map((elem, index) => (
             <div className={s.additionalFields} key={index}>
               <h1 className={s.title}>
                 {(infoCopy && infoCopy.nameTitle) || "Проект"} {index + 1}

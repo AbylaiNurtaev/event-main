@@ -25,6 +25,8 @@ import AllResultsPage from "./pages/AllResultsPage/AllResultsPage";
 import OpenedResults from "./pages/OpenedResults/OpenedResults";
 import ThanksPage from "./pages/ThanksPage/ThanksPage";
 import LikedPage from "./pages/LikedPage/LikedPage";
+import JouryApplications from "./pages/JouryApplications/JouryApplications";
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
@@ -102,6 +104,7 @@ function App() {
           path="/adminApplication/:id"
           element={<AdminApplication />}
         ></Route>
+        <Route path="/jouryApplications/:email" element={<JouryApplications />}></Route>
       </Routes>
     </div>
   );
