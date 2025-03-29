@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import s from "./OpenedResults.module.sass";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../axios";
+import LightGallery from "lightgallery/react";
+import lgThumbnail from "lightgallery/plugins/thumbnail";
 
 function OpenedResults() {
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ function OpenedResults() {
   const [videos, setVideos] = useState();
   const [previews, setPreviews] = useState();
   const [criteria, setCriteria] = useState();
-
+  const [infoCopy, setInfoCopy] = useState();
   const [grades, setGrades] = useState();
 
   const [juryRatings, setJuryRatings] = useState([]); // Массив с объектами { juryId, rating }
@@ -111,6 +113,7 @@ function OpenedResults() {
           setDocuments(data.documents);
           setPreviews(data.previews);
           setVideos(data.application_data.videos);
+          setInfoCopy(data.application_data.info);
 
           setPortfolio(data.portfolio);
           if (
@@ -253,31 +256,77 @@ function OpenedResults() {
                   {application.application_data.awards}
                 </div>
               </div>
-              {application.application_data.info.fields?.map((elem, index) => (
+              {/* {application.application_data.info.fields?.map((elem, index) => (
                 <div className={s.row} key={index}>
                   <div className={s.bold}>{elem?.key}:</div>
                   <div className={s.text}>{elem?.value}</div>
                 </div>
-              ))}
+              ))} */}
             </div>
             <div className={s.right}>
               <img src={user.avatar} alt="" />
             </div>
           </div>
-          {portfolio[0] && (
-            <div className={s.projects}>
-              {portfolio[0].map((elem1, index) => (
-                <img
-                  key={index}
-                  src={elem1}
-                  style={{ cursor: "pointer" }}
-                  alt={`project ${index}`}
-                  className={s.fullImage}
-                  onClick={() => setSelectedImage(elem1)}
-                />
-              ))}
-            </div>
-          )}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              flexWrap: "wrap",
+              gap: "20px",
+              marginTop: "20px",
+            }}
+          >
+            <LightGallery
+              plugins={[lgThumbnail]}
+              mode="lg-fade"
+              // onInit={onInit}
+              speed={500}
+              pager={true}
+              thumbnail={true}
+              galleryId={"nature"}
+              autoplayFirstVideo={false}
+              elementClassNames={s.gallery}
+              mobileSettings={{
+                controls: false,
+                showCloseIcon: false,
+                download: false,
+                rotate: false,
+              }}
+              fle
+            >
+              {/* <div> */}
+              {infoCopy?.images == true &&
+                portfolio?.[0] &&
+                portfolio[0]?.map((file, index) => {
+                  const rowIndex = Math.floor(index / 7);
+                  const positionInRow = index % 7;
+                  const className = positionInRow < 4 ? s.small : s.large;
+                  const imageUrl =
+                    file instanceof File ? URL.createObjectURL(file) : file;
+
+                  if (imageUrl === "NEW_FILES") return null;
+
+                  return (
+                    <a
+                      data-lg-size="300-240"
+                      key={index}
+                      className={`gallery__item`}
+                      data-src={imageUrl}
+                      data-sub-html={`<p>Фото ${index + 1}</p>`}
+                    >
+                      <img
+                        src={imageUrl}
+                        alt="preview"
+                        className={"img-responsive"}
+                      />
+                    </a>
+                  );
+                })}
+              {/* </div> */}
+            </LightGallery>
+          </div>
           {selectedImage && (
             <div
               style={{
@@ -308,34 +357,84 @@ function OpenedResults() {
 
           <div className={s.projects}>
             {countProjects &&
-              countProjects.map((project, elem) => (
+              countProjects?.map((project, elem) => (
                 <div className={s.project} key={elem}>
-                  <div className={s.redTitle}>проект {elem + 1}</div>
-                  <div className={s.title}>
-                    {application.application_data.nomination}
-                  </div>
-                  {project.map((prj, index) => (
+                  {/* <div className={s.redTitle}>проект {elem + 1}</div> */}
+                  <div className={s.title}>проект {elem + 1}</div>
+                  {/* {project.map((prj, index) => (
                     <div className={s.row} key={index}>
                       <div className={s.bold}>
                         {countProjects[0][index].key}:
                       </div>
                       <div className={s.text}>{prj?.value}</div>
                     </div>
-                  ))}
-                  {showAllPhotos && portfolio[elem] && (
-                    <div className={s.projects}>
-                      {portfolio[elem + 1].map((elem1, index) => (
-                        <img
-                          key={index}
-                          style={{ cursor: "pointer" }}
-                          src={elem1}
-                          alt={`project ${index}`}
-                          onClick={() => setSelectedImage(elem1)}
-                          className={s.fullImage}
-                        />
-                      ))}
-                    </div>
-                  )}
+                  ))} */}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                      flexWrap: "wrap",
+                      gap: "20px",
+                      marginTop: "20px",
+                    }}
+                  >
+                    <LightGallery
+                      plugins={[lgThumbnail]}
+                      mode="lg-fade"
+                      // onInit={onInit}
+                      speed={500}
+                      pager={true}
+                      thumbnail={true}
+                      galleryId={"nature"}
+                      autoplayFirstVideo={false}
+                      elementClassNames={s.gallery}
+                      mobileSettings={{
+                        controls: false,
+                        showCloseIcon: false,
+                        download: false,
+                        rotate: false,
+                      }}
+                    >
+                      {/* <div> */}
+                      {infoCopy &&
+                        portfolio?.[
+                          infoCopy?.images == true ? elem + 1 : elem
+                        ] &&
+                        portfolio[
+                          infoCopy?.images == true ? elem + 1 : elem
+                        ]?.map((file, index) => {
+                          const rowIndex = Math.floor(index / 7);
+                          const positionInRow = index % 7;
+                          const className =
+                            positionInRow < 4 ? s.small : s.large;
+                          const imageUrl =
+                            file instanceof File
+                              ? URL.createObjectURL(file)
+                              : file;
+
+                          if (imageUrl === "NEW_FILES") return null;
+
+                          return (
+                            <a
+                              data-lg-size="300-240"
+                              key={index}
+                              className={`gallery__item`}
+                              data-src={imageUrl}
+                              data-sub-html={`<p>Фото ${index + 1}</p>`}
+                            >
+                              <img
+                                src={imageUrl}
+                                alt="preview"
+                                className={"img-responsive"}
+                              />
+                            </a>
+                          );
+                        })}
+                      {/* </div> */}
+                    </LightGallery>
+                  </div>
                 </div>
               ))}
           </div>

@@ -32,6 +32,7 @@ function JouryChecking() {
   const [previews, setPreviews] = useState();
   const [criteria, setCriteria] = useState();
   const [newPortfolio, setNewPortfolio] = useState();
+  const [juryRatingsText, setJuryRatingsText] = useState([]);
   console.log("CRITERIA", criteria);
 
   const [grades, setGrades] = useState();
@@ -39,9 +40,12 @@ function JouryChecking() {
   const [juryRatings, setJuryRatings] = useState([]); // Массив с объектами { juryId, rating }
   const [liked, setLiked] = useState(false);
 
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
   const [dis, setBtnDisabled] = useState(true);
 
+  const [count, setCount] = useState(0);
+  const [users, setUsers] = useState();
+  const [infoCopy, setInfoCopy] = useState(null);
   const toggleInput = (e) => {
     setSuccess(e.target.checked);
   };
@@ -50,17 +54,17 @@ function JouryChecking() {
     setJuryRatings((prevRatings) => {
       const existingRating = prevRatings.find(
         (item) =>
-          item.name === name &&
-          item.category === category &&
-          item.projectId === projectId &&
+          item.name == name &&
+          item.category == category &&
+          item.projectId == projectId &&
           item.applicationId == applicationId
       );
 
       if (existingRating) {
         return prevRatings.map((item) =>
-          item.name === name &&
-          item.category === category &&
-          item.projectId === projectId &&
+          item.name == name &&
+          item.category == category &&
+          item.projectId == projectId &&
           item.applicationId == applicationId
             ? { ...item, rating, jouryId }
             : item
@@ -74,7 +78,7 @@ function JouryChecking() {
     });
   };
 
-  console.log("juryRate", juryRatings);
+  console.log("infoCopy", infoCopy);
 
   const toggleFavorite = async () => {
     try {
@@ -96,7 +100,7 @@ function JouryChecking() {
   const transformData = (data, portfolio) => {
     let portfolioIndex = 0; // Указатель на текущий элемент в портфолио
 
-    return data.reduce((result, count, index) => {
+    return data?.reduce((result, count, index) => {
       if (index === 0 && count === null) return result; // Пропускаем первый элемент, если он null
 
       if (typeof count === "number") {
@@ -141,7 +145,7 @@ function JouryChecking() {
         if (data) {
           let joury = data.find((elem) => elem._id == jouryId);
           console.log("finded Joury", joury);
-          if (joury.liked.includes(applicationId)) {
+          if (joury?.liked?.includes(applicationId)) {
             setLiked(true);
           }
 
@@ -170,18 +174,32 @@ function JouryChecking() {
 
           setPortfolio(transformData(count, data.portfolio));
           setNewPortfolio(data.portfolio);
-          console.log("ПОРТФ", data.portfolio);
-          for (
-            let i = 0;
-            i < data.application_data.imagesCount.length - 1;
-            i++
-          ) {
+          setInfoCopy(data.application_data.info);
+          console.log("ПОРТФ", data);
+          let count123 = Array.isArray(data.application_data.countOfProjects)
+            ? data.application_data.countOfProjects.length
+            : typeof data.application_data.countOfProjects === "number"
+            ? data.application_data.countOfProjects
+            : 0;
+          for (let i = 0; i < count123; i++) {
             setCountProjects((prev) => [
               ...prev,
               data.application_data.info.additionalFields.map(
                 (elem) => elem[i]
               ),
             ]);
+          }
+
+          const count1 = data.application_data?.countOfProjects;
+
+          if (Number.isInteger(count)) {
+            const fields = Array.from({ length: count1 }, (_, i) => ({
+              key: `Field ${i + 1}`,
+              value: "",
+            }));
+            setCount(fields);
+          } else {
+            setCount(count1);
           }
         }
       });
@@ -211,11 +229,12 @@ function JouryChecking() {
         .then((data) => {
           if (data) {
             const filteredData = data.filter(
-              (elem) => elem.applicationId == applicationId
+              (elem) =>
+                elem.applicationId == applicationId && elem.jouryId == id
             );
             console.log("filteredData", data);
 
-            setJuryRatings(filteredData);
+            // setJuryRatings(filteredData);
             if (data.length == 0) {
               setGraded(false);
             }
@@ -224,9 +243,36 @@ function JouryChecking() {
     }
   }, [application]);
   const [selectedImage, setSelectedImage] = useState(null);
+  console.log("countProjects", countProjects);
+  useEffect(() => {
+    if (!applicationId || !id) return;
+
+    axios
+      .get(`/users/${id}/jury-ratings`)
+      .then((res) => res.data)
+      .then((data) => {
+        if (data) {
+          const filteredData = data.filter(
+            (elem) =>
+              elem.applicationId == applicationId && elem.jouryId == jouryId
+          );
+
+          console.log("Загруженные оценки", filteredData);
+
+          setJuryRatings(filteredData);
+          if (filteredData.length === 0) {
+            setGraded(false);
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки оценок:", err);
+      });
+  }, [applicationId, id]);
 
   const saveGrading = () => {
     if (success) {
+      console.log("juryRatings", juryRatings);
       try {
         axios
           .post(`/users/jury-ratings`, {
@@ -251,20 +297,36 @@ function JouryChecking() {
     }
   };
 
+  useEffect(() => {
+    const ratings = juryRatings
+      .filter((elem) => elem.jouryId == jouryId)
+      .map((elem) => elem.rating);
+
+    const averageRating =
+      ratings.length > 0
+        ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length
+        : 0;
+    setJuryRatingsText(averageRating);
+  }, [juryRatings]);
+
   return (
     <div className={s.container}>
       {access == true && user && (
         <div className={s.innerContainer}>
-          <div className={s.crumbs}>
+          {/* <div className={s.crumbs}>
             <img src="/images/fluent_arrow-up-28-filled.svg" alt="" />
             <p onClick={() => navigate(-1)}>Вернуться назад</p>
-          </div>
+          </div> */}
 
           <div className={s.mainSide}>
             <div className={s.left}>
               <div className={s.title}>{user.name}</div>
               <div className={s.specialization}>{user.specialization}</div>
               {/* <div className={s.nomination}>{user.nomination}</div> */}
+              <p className={s.soc} style={{ color: "black" }}>
+                Город: {user?.city}
+              </p>
+
               <p className={s.soc}>Соцсети:</p>
               {user.instagram && (
                 <p
@@ -304,33 +366,37 @@ function JouryChecking() {
                 <div className={s.bold}>О себе:</div>
                 <div className={s.text}>{user.about}</div>
               </div>
-              <div className={s.row}>
-                <div className={s.bold}>Награды:</div>
-                <div className={s.text}>
-                  {application.application_data.awards}
+              {application.application_data.awards && (
+                <div className={s.row}>
+                  <div className={s.bold}>Награды:</div>
+                  <div className={s.text}>
+                    {application.application_data.awards}
+                  </div>
                 </div>
-              </div>
-              {application.application_data.info.fields?.map((elem, index) => (
+              )}
+              {/* {application.application_data.info.fields?.map((elem, index) => (
                 <div className={s.row} key={index}>
                   <div className={s.bold}>{elem.key}:</div>
                   <div className={s.text}>{elem.value}</div>
                 </div>
-              ))}
+              ))} */}
             </div>
             <div className={s.right}>
               <img src={user.avatar} alt="" />
             </div>
           </div>
-          {documents && documents.length >= 1 && (
-            <div className={s.documents}>
-              <h2>Приложенные документы</h2>
-              {documents.map((elem, index) => (
-                <div className={s.document} onClick={() => window.open(elem)}>
-                  Документ {index + 1}
-                </div>
-              ))}
-            </div>
-          )}
+          {application.application_data.info.docs == true &&
+            documents &&
+            documents.length >= 1 && (
+              <div className={s.documents}>
+                <h2>Приложенные документы</h2>
+                {documents.map((elem, index) => (
+                  <div className={s.document} onClick={() => window.open(elem)}>
+                    Документ {index + 1}
+                  </div>
+                ))}
+              </div>
+            )}
           <div
             style={{
               display: "flex",
@@ -360,7 +426,8 @@ function JouryChecking() {
               }}
             >
               {/* <div> */}
-              {newPortfolio[0] &&
+              {infoCopy?.images == true &&
+                newPortfolio?.[0] &&
                 newPortfolio[0]?.map((file, index) => {
                   const rowIndex = Math.floor(index / 7);
                   const positionInRow = index % 7;
@@ -418,22 +485,22 @@ function JouryChecking() {
           )}
 
           <div className={s.projects}>
-            {countProjects &&
-              countProjects.map((project, elem) => (
+            {infoCopy &&
+              countProjects &&
+              countProjects?.map((project, elem) => (
                 <div className={s.project} key={elem}>
-                  <div className={s.redTitle}>проект {elem + 1}</div>
-                  <div className={s.title}>
-                    {application.application_data.nomination}
-                  </div>
-                  {project.map((prj, index) => (
+                  <div className={s.title}>проект {elem + 1}</div>
+
+                  {/* {project?.map((prj, index) => (
                     <div className={s.row} key={index}>
                       <div className={s.bold}>
-                        {countProjects[0][index].key}:
+                        {countProjects?.[0]?.[index]?.key || "—"}:
                       </div>
                       <div className={s.text}>{prj?.value}</div>
                     </div>
-                  ))}
-                  {showAllPhotos && portfolio[elem] && (
+                  ))} */}
+
+                  {showAllPhotos && portfolio?.[elem] && (
                     <div className={s.projects}>
                       <LightGallery
                         plugins={[lgThumbnail]}
@@ -453,8 +520,12 @@ function JouryChecking() {
                         }}
                       >
                         {/* <div> */}
-                        {newPortfolio[elem + 1] &&
-                          newPortfolio[elem + 1]?.map((file, index) => {
+                        {newPortfolio[
+                          infoCopy?.images == true ? elem + 1 : elem
+                        ] &&
+                          newPortfolio[
+                            infoCopy?.images == true ? elem + 1 : elem
+                          ]?.map((file, index) => {
                             const rowIndex = Math.floor(index / 7);
                             const positionInRow = index % 7;
                             const className =
@@ -490,27 +561,25 @@ function JouryChecking() {
               ))}
           </div>
 
-          {videos &&
-            videos.length >= 1 &&
-            previews &&
-            previews.length >= videos.length && (
-              <div className={s.videosBlock}>
-                <h1>Видео</h1>
-                <div className={s.videos}>
-                  {videos.map((elem, index) =>
-                    previews[index] ? (
-                      <img
-                        key={index}
-                        className={s.video}
-                        src={previews[index]}
-                        onClick={() => window.open(elem)}
-                        alt={`Video preview ${index + 1}`}
-                      />
-                    ) : null
-                  )}
-                </div>
+          {videos && videos.length >= 1 && (
+            <div className={s.videosBlock}>
+              <h1>Видео</h1>
+              <div className={s.videos}>
+                {videos.map((elem, index) => (
+                  <img
+                    key={index}
+                    className={s.video}
+                    src={
+                      previews?.[index] ||
+                      "https://www.lmfebui.com/assets/images/video-thumbnail.png"
+                    }
+                    onClick={() => window.open(elem)}
+                    alt={`Video preview ${index + 1}`}
+                  />
+                ))}
               </div>
-            )}
+            </div>
+          )}
 
           <div className={s.grading}>
             <button
@@ -552,7 +621,9 @@ function JouryChecking() {
               countProjects &&
               countProjects.map((prj, idx) => (
                 <div className={s.prj}>
-                  <h3 className={s.title}>Оценивание за проект {idx + 1}</h3>
+                  {criteria && criteria.additional.length > 0 && (
+                    <h3 className={s.title}>Оценивание за проект {idx + 1}</h3>
+                  )}
                   {criteria &&
                     criteria.additional &&
                     criteria.additional.map((elem, index) => (
@@ -563,9 +634,9 @@ function JouryChecking() {
                           currentRating={
                             juryRatings.find(
                               (jury) =>
-                                jury.name === elem.name &&
-                                jury.category === "additional" &&
-                                jury.projectId === idx &&
+                                jury.name == elem.name &&
+                                jury.category == "additional" &&
+                                jury.projectId == idx &&
                                 jury.applicationId == applicationId
                             )?.rating || 0
                           }
@@ -583,6 +654,9 @@ function JouryChecking() {
                 </div>
               ))}
 
+            {/* <p>Общая оценка: {Math.round(juryRatingsText)}</p> */}
+            <p>Финальная оценка: {juryRatingsText?.toFixed(1)}</p>
+
             <div
               style={{
                 display: "flex",
@@ -594,7 +668,11 @@ function JouryChecking() {
               }}
             >
               {!dis && (
-                <input type="checkbox" onChange={(e) => toggleInput(e)} />
+                <input
+                  style={{ width: "50px", height: "50px" }}
+                  type="checkbox"
+                  onChange={(e) => toggleInput(e)}
+                />
               )}
               {!dis && (
                 <p>

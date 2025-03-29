@@ -20,11 +20,14 @@
         .gallery
             margin: 0 auto
             display: flex
-            justify-content: center
+            flex-direction: row
+            justify-content: flex-start
+            align-items: flex-start
             flex-wrap: wrap
 
-            width: 90% !important
+            width: 100%
             gap: 20px
+            
 
             a
                 height: 200px !important
@@ -126,11 +129,11 @@
 
                 .row
                     display: flex
-                    flex-direction: row
+                    flex-direction: column
 
                     justify-content: center
                     align-items: flex-start
-                    gap: 100px
+                    // gap: 100px
                     margin-top: 40px
 
                     &:nth-last-child(1)
@@ -151,7 +154,7 @@
 
                     .bold
 
-                        width: 250px
+                        // width: 250px
 
             .right
                 width: 30%
@@ -205,11 +208,11 @@
 
                 .row
                     display: flex
-                    flex-direction: row
+                    flex-direction: column
 
                     justify-content: flex-start
                     align-items: flex-start
-                    gap: 100px
+                    // gap: 100px
                     margin-top: 40px
                     width: 100%
 
@@ -226,12 +229,12 @@
 
                     .text
                         font-weight: 500
-                        width: 374px
+                        // width: 374px
                         line-height: 155%
 
                     .bold
 
-                        width: 250px
+                        // width: 250px
 
         .documents
             display: flex
@@ -319,6 +322,8 @@
 
                 justify-content: flex-start
                 align-items: flex-start
+
+                flex-wrap: wrap
 
                 gap: 30px
                 width: 100%

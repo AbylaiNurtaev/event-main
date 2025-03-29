@@ -11,33 +11,15 @@ function JouryApplications() {
   const navigate = useNavigate();
   const { email } = useParams();
   const [jouryId, setJouryId] = useState(null);
+  const [joury, setJoury] = useState(null);
   useEffect(() => {
     axios
       .get("/getJouries")
       .then((res) => res?.data.find((elem) => elem.email == email))
       .then((data) => {
         setJouryId(data._id);
-      });
-    axios
-      .get("/getAllUsers")
-      .then((res) => res.data)
-      .then((data) => {
-        let allNominations = data.filter((elem) => elem?.jouryRate.map((rate) => rate?.jouryId == jouryId).length > 0).map((user) =>
-          user.applications
-            ? user.applications.map((elem) => ({
-                ...elem.application_data,
-                userId: user._id,
-                applicationId: elem.application_id,
-                accepted: elem.accepted,
-              }))
-            : null
-        );
         console.log("data", data);
-        setUsers(
-          allNominations
-            .filter((nomination) => nomination && nomination.length >= 1)
-            .flat()
-        );
+        setJoury(data);
       });
 
     axios
@@ -53,6 +35,92 @@ function JouryApplications() {
         }
       });
   }, []);
+
+  useEffect(() => {
+    if (joury != null && nominations.length > 0) {
+      axios
+        .get("/getAllUsers")
+        .then((res) => res.data)
+        .then((data) => {
+          let allNominations = data
+            .filter(
+              (elem) =>
+                elem?.jouryRate.map((rate) => rate?.jouryId == jouryId).length >
+                0
+            )
+            .map((user) =>
+              user.applications
+                ? user.applications.map((elem) => {
+                    const isChecked = user.jouryRate.some(
+                      (rate) =>
+                        rate?.jouryId === jouryId &&
+                        rate?.applicationId === elem.application_id // сравниваем ID заявки
+                    );
+                    return {
+                      ...elem.application_data,
+                      userId: user._id,
+                      applicationId: elem.application_id,
+                      accepted: elem.accepted,
+                      avatar: user.avatarUrl,
+                      checked: isChecked,
+                    };
+                  })
+                : null
+            );
+
+          const lowerCaseAccepted =
+            joury?.acceptedNominations?.map((n) => n?.toLowerCase()) || [];
+          // console.log("joury?.lowerCaseAccepted", lowerCaseAccepted);
+
+          const allNominations_2 = data.flatMap((user, userIndex) => {
+            // console.log(`👤 User #${userIndex}: ${user._id}`);
+
+            const filteredApplications = user.applications?.filter(
+              (app, appIndex) => {
+                const nomination =
+                  app.application_data?.nomination?.toLowerCase();
+                const isAccepted = lowerCaseAccepted.includes(nomination);
+
+                // console.log(
+                //   `  📄 App #${appIndex} nomination: "${nomination}" -> ${
+                //     isAccepted ? "✅ accepted" : "❌ rejected"
+                //   }`
+                // );
+
+                return isAccepted;
+              }
+            );
+
+            const mapped =
+              filteredApplications?.map((app) => {
+                const result = {
+                  ...app.application_data,
+                  userId: user._id,
+                  applicationId: app.application_id,
+                  accepted: app.accepted,
+                };
+                // console.log("    ✅ Added application:", result);
+                return result;
+              }) || [];
+
+            return mapped;
+          });
+
+          console.log("allNominations_2", allNominations_2);
+          const all = [...(allNominations_2 || []), ...(allNominations || [])];
+
+          // Расплющим, если это массив массивов:
+          const flat = all.flat().filter(Boolean); // удалим null/undefined
+
+          // Удалим дубликаты по applicationId:
+          const uniqueById = Array.from(
+            new Map(flat.map((item) => [item.applicationId, item])).values()
+          );
+
+          setUsers(uniqueById);
+        });
+    }
+  }, [joury, nominations]);
 
   const handleAccessApplication = async (elem) => {
     setIsLoading(true);
@@ -88,6 +156,7 @@ function JouryApplications() {
     XLSX.writeFile(workbook, "Applications.xlsx");
   };
 
+  console.log("users", users);
   return (
     <div className={s.container}>
       <div className={s.applications}>
@@ -140,7 +209,7 @@ function JouryApplications() {
                         <button
                           onClick={() =>
                             window.open(
-                              `/applicationChecking/${elem.applicationId}/${elem.userId}`,
+                              `/applicationChecking/${elem.applicationId}/${elem.userId}/${jouryId}`,
                               "_blank"
                             )
                           }
@@ -161,6 +230,9 @@ function JouryApplications() {
                             ? "Одобрить заявку"
                             : "Заявка одобрена"}
                         </button>
+                        {elem.checked && (
+                          <p style={{ color: "green" }}>Оценил</p>
+                        )}
                       </div>
                     </div>
                   ))}

@@ -16,6 +16,7 @@ function GradingPage() {
 
   const [applications, setApplications] = useState(null);
   const [jouryId, setJouryId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     window.scroll({
@@ -26,6 +27,7 @@ function GradingPage() {
 
   useEffect(() => {
     const checkJoury = async () => {
+      setIsLoading(true);
       axios
         .post("/loginJoury", { id })
         .then((res) => res.data)
@@ -61,23 +63,29 @@ function GradingPage() {
             : null
         );
         let allNominations_2 = data
-          .filter(
-            (elem) =>
-              elem?.jouryRate.map((rate) => rate?.jouryId == jouryId).length > 0
-          )
+          .filter((elem) => elem?.jouryRate.some((rate) => rate?.jouryId == id))
           .map((user) =>
             user.applications
-              ? user.applications.map((elem) => ({
-                  ...elem.application_data, // Копируем все данные из application_data
-                  userId: user._id, // Добавляем user._id как поле userId
-                  applicationId: elem.application_id, // Добавляем application_id как поле applicationId
-                  accepted: elem.accepted,
-                  avatar: user.avatarUrl,
-                  checked: true,
-                }))
+              ? user.applications.map((elem) => {
+                  const isChecked = user.jouryRate.some(
+                    (rate) =>
+                      rate?.jouryId === id &&
+                      rate?.applicationId === elem.application_id // сравниваем ID заявки
+                  );
+                  return {
+                    ...elem.application_data,
+                    userId: user._id,
+                    applicationId: elem.application_id,
+                    accepted: elem.accepted,
+                    avatar: user.avatarUrl,
+                    checked: isChecked,
+                  };
+                })
               : null
           );
+
         console.log(
+          "AAAAAA",
           allNominations
             .filter((nomination) => nomination && nomination.length >= 1)
             .flat()
@@ -86,24 +94,32 @@ function GradingPage() {
           ...Array.from(
             new Map(
               [
-                  ...allNominations
-                  .filter((nomination) => nomination && nomination.length >= 1)
+                ...allNominations
+                  .filter(
+                    (nomination) => nomination && nomination.length >= 1
+                    // nomination.accepted == true
+                  )
                   .flat(),
-                  ...allNominations_2
-                  .filter((nomination) => nomination && nomination.length >= 1)
+                ...allNominations_2
+                  .filter(
+                    (nomination) => nomination && nomination.length >= 1
+                    // nomination.accepted == true
+                  )
                   .flat(),
               ].map((item) => [item.applicationId, item])
             ).values()
           ),
         ]);
+        setIsLoading(false);
       });
   }, []);
 
-  console.log("users", users);
+  console.log("applications", applications);
   useEffect(() => {
     let filteredApplications = users?.filter(
       (nomination) =>
         nomination?.nomination &&
+        nomination.accepted == true &&
         openedNomination &&
         nomination.nomination.toLowerCase() == openedNomination.toLowerCase()
     );
@@ -129,49 +145,31 @@ function GradingPage() {
               <div className={s.par}>
                 Жюри WEDS — признанные эксперты свадебной индустрии. Их
                 профессионализм и независимость гарантируют объективность и
-                высокий уровень премии.
+                высокий уровень рейтинга.
               </div>
             </div>
 
             <div className={s.boldText}>Правила голосования</div>
             <div className={s.mainInformation}>
               <div className={s.left}>
-                — Жюри рейтинга ежегодно формируется из числа лидеров свадебной
-                и event индустрии, включая руководителей агентств и признанных
-                экспертов среди ведущих, фотографов, видеографов, декораторов и
-                стилистов. <br />
+                — Жюри рейтинга формируется ежегодно и включает лидеров
+                свадебной и event-индустрии: руководителей агентств, а также
+                признанных экспертов среди ведущих, фотографов, видеографов,
+                декораторов и стилистов. <br />
                 <br />
-                <b>— ПЕРВЫЙ ЭТАП</b> оценки осуществляется большим и executive
-                жюри в онлайн формате.
-                <br />
-                <br />
-                <b>— ВТОРОЙ ЭТАП</b> — оффлайн встреча, на которой executive
-                жюри утверждают первые 10 мест в каждой категории и номинации в
-                категории Площадки. Рейтинг формируется исходя из медианного
-                значения оценок жюри.
-                <br />
-                <br />— Жюри оценивают участников исходя из критерий{" "}
-                <b>ПО 10-ТИ БАЛЬНОЙ ШКАЛЕ</b> (ниже указаны критерии и
-                требования к каждой категории).
+                <br />— Оценивание проходит в онлайн-формате и осуществляется
+                двумя составами жюри: основным и по категориям. Итоговый рейтинг
+                рассчитывается на основе медианного значения выставленных
+                оценок.
               </div>
               <div className={s.right}>
-                — каждый член жюри оценивает не менее 100 номинантов. Агентствам
-                для оценки доступны все участники, специалистов оценивают только
-                свои категории (фотографы-только фотографов, видеографы-только
-                видеографов)
+                — Каждый участник оценивается по четко сформулированным
+                критериям по 10-балльной шкале (подробные критерии для каждой
+                категории указаны ниже).
                 <br />
-                <br />— Алгоритмы нашего сайта автоматически предлагают членам
-                жюри оцениваютучастников{" "}
-                <b>С НАИМЕНЬШИМ КОЛИЧЕСТВОМ ГОЛОСОВ.</b>
-                <br />
-                <br />— Если по каким-то причинам вы не можете профессионально
-                оценить участника-вы имеете{" "}
-                <b>ВОЗМОЖНОСТЬ ДОБРОВОЛЬНО ВОЗДЕРЖАТЬСЯ</b> от оценки и
-                пропустить участника.
-                <br />
-                <br />— Голосование в этом году можно провести анонимно или
-                открыто. В последнем случае ваше имя, оценки и комментарии будут
-                предоставлены номинантам рейтинга.
+                <br />— Каждый член жюри оценивает не менее 50 номинантов.
+                Руководители агентств голосуют за участников во всех категориях,
+                чтобы лучше узнать работу специалистов.
               </div>
             </div>
 
@@ -215,6 +213,16 @@ function GradingPage() {
                 )}
               </div>
             </div>
+            {isLoading && (
+              <div className={s.loading}>
+                Пожалуйста, подождите...{" "}
+                <img
+                  style={{ width: "300px" }}
+                  src="https://www.icegif.com/wp-content/uploads/2023/07/icegif-1262.gif"
+                  alt=""
+                />
+              </div>
+            )}
 
             <div className={s.applications}>
               {applications?.map((aplication) => (
@@ -230,7 +238,9 @@ function GradingPage() {
                   <img src={aplication.avatar} alt="" />
                   <h4>{aplication.fullName}</h4>
                   <p>{aplication.specialization}</p>
-                  {aplication.checked && <p style={{ color: "green" }}>Оценил</p>}
+                  {aplication.checked && (
+                    <p style={{ color: "green" }}>Оценил</p>
+                  )}
                 </div>
               ))}
             </div>

@@ -77,12 +77,13 @@ function App() {
           <Route path="/login" element={<AuthorizationPage />}></Route>
           <Route path="/payment" element={<PaymentPage />}></Route>
           <Route path="/grading" element={<GradingPage />}></Route>
+          {/* <Route path="/testing123" element={<ResultsPage />}></Route> */}
           <Route
             path="/application/:applicationId"
             element={<ApplicationPage />}
           ></Route>
           <Route
-            path="/applicationChecking/:applicationId/:id"
+            path="/applicationChecking/:applicationId/:id/:jouryId?"
             element={<AdminCheckApplication />}
           ></Route>
           <Route
@@ -104,7 +105,10 @@ function App() {
           path="/adminApplication/:id"
           element={<AdminApplication />}
         ></Route>
-        <Route path="/jouryApplications/:email" element={<JouryApplications />}></Route>
+        <Route
+          path="/jouryApplications/:email"
+          element={<JouryApplications />}
+        ></Route>
       </Routes>
     </div>
   );

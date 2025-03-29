@@ -62,13 +62,12 @@ function ApplicationPage() {
           const count = data.application_data?.countOfProjects;
 
           if (Number.isInteger(count) && count > 0) {
-            
             const fields = Array.from({ length: count }, (_, i) => ({
               key: `Field ${i + 1}`,
               value: "",
             }));
             setCountProjects(fields);
-          }else{
+          } else {
             setCountProjects(count);
           }
           // setCountProjects(data.application_data.countOfProjects);
@@ -114,7 +113,6 @@ function ApplicationPage() {
           const count = data.application_data?.countOfProjects;
 
           if (Number.isInteger(count) && count > 0) {
-
             const fields = Array.from({ length: count }, (_, i) => ({
               key: `Field ${i + 1}`,
               value: "",
@@ -605,12 +603,12 @@ function ApplicationPage() {
 
   const addAdditionalField = () => {
     setAdditionalFields((prev) => [
-      ...prev,
-      { key: `Field ${prev.length + 1}`, value: "" }, // Добавляем новый объект с ключом и пустым значением
+      ...(prev || []),
+      { key: `Field ${(prev || []).length + 1}`, value: "" },
     ]);
     setCountProjects((prev) => [
-      ...prev,
-      { key: `Field ${prev.length + 1}`, value: "" }, // Добавляем новый объект с ключом и пустым значением
+      ...(prev || []),
+      { key: `Field ${(prev || []).length + 1}`, value: "" },
     ]);
   };
 
@@ -1162,12 +1160,14 @@ function ApplicationPage() {
                     alt="preview"
                     className={s.previewImage}
                   />
-                  <img
-                    onClick={() => deletePortfolioImage(0, index)}
-                    className={s.closeBtn}
-                    src="/images/closeBtn.svg"
-                    alt="close"
-                  />
+                  {!disabled2 && (
+                    <img
+                      onClick={() => deletePortfolioImage(0, index)}
+                      className={s.closeBtn}
+                      src="/images/closeBtn.svg"
+                      alt="close"
+                    />
+                  )}
                 </div>
               );
             })}
@@ -1440,6 +1440,8 @@ function ApplicationPage() {
                           alt="preview"
                           className={s.previewImage}
                         />
+                        {
+                          !disabled2 &&
                         <img
                           onClick={() =>
                             deletePortfolioImage(
@@ -1451,6 +1453,7 @@ function ApplicationPage() {
                           src="/images/closeBtn.svg"
                           alt="close"
                         />
+                        }
                       </div>
                     );
                   })}

@@ -1,0 +1,23 @@
+.rating
+    display: flex
+    gap: 5px
+    align-items: center
+    justify-content: flex-start
+    flex-wrap: wrap
+
+.star
+    cursor: pointer
+    font-size: 50px
+    transition: transform 0.2s ease
+
+    &:hover
+        transform: scale(1.1)
+
+@media screen and (max-width: 768px)
+    .star
+        font-size: 35px
+
+@media screen and (max-width: 480px)
+    .star
+        font-size: 25px
+        gap: 3px

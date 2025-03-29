@@ -30,8 +30,8 @@ function AllUsers() {
           ? user.applications
               .map(
                 (app) =>
-                  `${app.application_data.nomination}: ${
-                    app.application_data.accepted ? "Одобрена" : "Не одобрена"
+                  `${app.application_data?.nomination}: ${
+                    app.application_data?.accepted ? "Одобрена" : "Не одобрена"
                   }`
               )
               .join(", ")

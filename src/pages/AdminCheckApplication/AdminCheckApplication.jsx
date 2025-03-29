@@ -16,6 +16,7 @@ import fjGallery from "flickr-justified-gallery";
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
 import "lightgallery/css/lg-thumbnail.css";
+import StarRating from "../../components/StarRating/StarRating";
 
 function AdminCheckApplication() {
   // useEffect(() => {
@@ -33,6 +34,42 @@ function AdminCheckApplication() {
 
   const [infoCopy, setInfoCopy] = useState();
   const [countProjects, setCountProjects] = useState([]);
+  const [criteria, setCriteria] = useState();
+
+  const [application, setApplication] = useState();
+  const [juryRatings, setJuryRatings] = useState([]);
+  const [graded, setGraded] = useState(false);
+
+  const { jouryId } = useParams();
+
+  const handleRatingChange = (name, rating, category, projectId) => {
+    setJuryRatings((prevRatings) => {
+      const existingRating = prevRatings.find(
+        (item) =>
+          item.name == name &&
+          item.category == category &&
+          item.projectId == projectId &&
+          item.applicationId == applicationId
+      );
+
+      if (existingRating) {
+        return prevRatings.map((item) =>
+          item.name == name &&
+          item.category == category &&
+          item.projectId == projectId &&
+          item.applicationId == applicationId
+            ? { ...item, rating, jouryId }
+            : item
+        );
+      } else {
+        return [
+          ...prevRatings,
+          { name, rating, category, projectId, jouryId, applicationId },
+        ];
+      }
+    });
+  };
+
   useEffect(() => {
     window.scroll({
       top: 0,
@@ -49,9 +86,40 @@ function AdminCheckApplication() {
           ...new Set(data.map((item) => item.nomination[0])),
         ];
         setNominations(uniqueCategories);
+        if (data) {
+          let nom = data.find(
+            (nomination) =>
+              nomination._id == application?.application_data.info._id
+          );
+          if (nom) {
+            console.log("NOM", nom.criteria[0]);
+            setCriteria(nom.criteria[0]);
+          }
+        }
+        if (application && application.user._id) {
+          axios
+            .get(`/users/${application.user._id}/jury-ratings`)
+            .then((res) => res.data)
+            .then((data) => {
+              if (data) {
+                const filteredData = data.filter(
+                  (elem) =>
+                    elem.applicationId == applicationId &&
+                    elem.jouryId == jouryId
+                );
+                console.log("filteredData", data);
+
+                setJuryRatings(filteredData);
+                if (data.length == 0) {
+                  setGraded(false);
+                }
+              }
+            });
+        }
       });
-  }, [applicationId, id]);
+  }, [applicationId, id, application]);
   const [isNew, setIsNew] = useState(true);
+  console.log(juryRatings, "juryRatings");
 
   useEffect(() => {
     if (applicationId != "new") {
@@ -69,6 +137,7 @@ function AdminCheckApplication() {
           setDocuments(data.documents || []);
           setPreviews(data.previews);
           setVideos(data.application_data.videos);
+          setApplication(data);
           console.log(
             "data.application_data.countOfProjects",
             data.application_data.countOfProjects
@@ -77,7 +146,7 @@ function AdminCheckApplication() {
           setAdditionalFields([]);
           const count = data.application_data?.countOfProjects;
 
-          if (Number.isInteger(count) && count > 0) {
+          if (Number.isInteger(count)) {
             const fields = Array.from({ length: count }, (_, i) => ({
               key: `Field ${i + 1}`,
               value: "",
@@ -121,7 +190,7 @@ function AdminCheckApplication() {
           setYoutube(data.application_data.youtube);
           const count = data.application_data?.countOfProjects;
 
-          if (Number.isInteger(count) && count > 0) {
+          if (Number.isInteger(count)) {
             const fields = Array.from({ length: count }, (_, i) => ({
               key: `Field ${i + 1}`,
               value: "",
@@ -133,7 +202,7 @@ function AdminCheckApplication() {
           setTiktok(data.application_data.tiktok);
           setInfo(data.application_data.info);
           setInfoCopy(data.application_data.info);
-
+          console.log("data.application_data.info", data.application_data.info);
           setAdditionalFields(data.application_data.info.additionalFields);
         })
         .catch((err) => console.log(err));
@@ -1078,28 +1147,29 @@ function AdminCheckApplication() {
             </div>
           </div>
         </div>
-        <label className={s.photosBlock} htmlFor="portfolio">
-          <div className={s.boldText}>ФОТОГРАФИИ</div>
-          <input
-            type="file"
-            disabled={true}
-            hidden={true}
-            multiple
-            id="portfolio"
-            onChange={(e) => handleFileSelection(e, 0)}
-            accept=".png, .jpg"
-          />
-          <div className={s.inputBlock}>
-            <p>Перетащите или нажмите для загрузки фото</p>
-            <p>Ограничение не более 50 файлов весом по 2 MB (.png, .jpg)</p>
-          </div>
-        </label>
+        {infoCopy && infoCopy.images && infoCopy.images == true && (
+          <label className={s.photosBlock} htmlFor="portfolio">
+            <div className={s.boldText}>ФОТОГРАФИИ</div>
+            <input
+              type="file"
+              disabled={true}
+              hidden={true}
+              multiple
+              id="portfolio"
+              onChange={(e) => handleFileSelection(e, 0)}
+              accept=".png, .jpg"
+            />
+            <div className={s.inputBlock}>
+              <p>Перетащите или нажмите для загрузки фото</p>
+              <p>Ограничение не более 50 файлов весом по 2 MB (.png, .jpg)</p>
+            </div>
+          </label>
+        )}
         {error && <div className={s.errorMessage}>{error}</div>}{" "}
         {/* Отображение ошибки */}
-        {selectedFiles[0] && selectedFiles[0].length >= 1 && (
+        {/* {selectedFiles[0] && selectedFiles[0].length >= 1 && (
           <p>Загруженные файлы:</p>
-        )}
-        ;
+        )} */}
         <LightGallery
           plugins={[lgThumbnail]}
           mode="lg-fade"
@@ -1119,6 +1189,8 @@ function AdminCheckApplication() {
         >
           {/* <div> */}
           {infoCopy &&
+            infoCopy.images &&
+            infoCopy.images == true &&
             newPortfolio[0] &&
             newPortfolio[0]?.map((file, index) => {
               const rowIndex = Math.floor(index / 7);
@@ -1147,68 +1219,74 @@ function AdminCheckApplication() {
             })}
           {/* </div> */}
         </LightGallery>
-        <div className={s.addDocument}>
-          <div className={s.boldText}>Документы</div>
-          <label htmlFor="document-input" className={s.inputBlock}>
-            <p>Перетащите или нажмите для загрузки документов</p>
-            <p>Ограничение не более 10 файлов весом по 25 MB (.pdf)</p>
-          </label>
+        {infoCopy?.docs == true && (
+          <div className={s.addDocument}>
+            <div className={s.boldText}>Документы</div>
+            <label htmlFor="document-input" className={s.inputBlock}>
+              <p>Перетащите или нажмите для загрузки документов</p>
+              <p>Ограничение не более 10 файлов весом по 25 MB (.pdf)</p>
+            </label>
 
-          <input
-            id="document-input"
-            type="file"
-            multiple
-            accept=".pdf"
-            onChange={handleDocumentChange}
-            style={{ display: "none" }}
-            disabled={true}
-          />
-          <ul className={s.fileList}>
-            {documents.length >= 1 && <p>Загруженные документы: </p>}
-            {documents &&
-              documents.map((file, index) => (
-                <li key={index}>
-                  <img src="/images/hugeicons_pdf-02.svg" alt="" />
-                  <span onClick={() => (window.location.href = file)}>
-                    {typeof file === "string"
-                      ? decodeURIComponent(file.split("/").pop().split("?")[0])
-                      : file.name}
-                  </span>
-                  {isNew ? (
-                    <span className={s.size}>
-                      {(file.size / (1024 * 1024)).toFixed(2)}MB
+            <input
+              id="document-input"
+              type="file"
+              multiple
+              accept=".pdf"
+              onChange={handleDocumentChange}
+              style={{ display: "none" }}
+              disabled={true}
+            />
+            <ul className={s.fileList}>
+              {infoCopy?.docs == true &&
+                documents &&
+                documents.map((file, index) => (
+                  <li key={index}>
+                    <img src="/images/hugeicons_pdf-02.svg" alt="" />
+                    <span onClick={() => (window.location.href = file)}>
+                      {typeof file === "string"
+                        ? decodeURIComponent(
+                            file.split("/").pop().split("?")[0]
+                          )
+                        : file.name}
                     </span>
-                  ) : null}
+                    {isNew ? (
+                      <span className={s.size}>
+                        {(file.size / (1024 * 1024)).toFixed(2)}MB
+                      </span>
+                    ) : null}
 
-                  {/* <img className={s.closeBtn} style={!isNew ? {marginLeft: '30px'}: {} } onClick={() => handleDocumentRemove(index)} src="/images/ph_plus-light (1).svg" alt="" /> */}
-                </li>
-              ))}
-            {newDocuments &&
-              newDocuments.map((file, index) => (
-                <li key={index}>
-                  <img src="/images/hugeicons_pdf-02.svg" alt="" />
-                  <span onClick={() => (window.location.href = file)}>
-                    {typeof file === "string"
-                      ? decodeURIComponent(file.split("/").pop().split("?")[0])
-                      : file.name}
-                  </span>
-                  {isNew ? (
-                    <span className={s.size}>
-                      {(file.size / (1024 * 1024)).toFixed(2)}MB
+                    {/* <img className={s.closeBtn} style={!isNew ? {marginLeft: '30px'}: {} } onClick={() => handleDocumentRemove(index)} src="/images/ph_plus-light (1).svg" alt="" /> */}
+                  </li>
+                ))}
+              {newDocuments &&
+                newDocuments.map((file, index) => (
+                  <li key={index}>
+                    <img src="/images/hugeicons_pdf-02.svg" alt="" />
+                    <span onClick={() => (window.location.href = file)}>
+                      {typeof file === "string"
+                        ? decodeURIComponent(
+                            file.split("/").pop().split("?")[0]
+                          )
+                        : file.name}
                     </span>
-                  ) : null}
+                    {isNew ? (
+                      <span className={s.size}>
+                        {(file.size / (1024 * 1024)).toFixed(2)}MB
+                      </span>
+                    ) : null}
 
-                  <img
-                    className={s.closeBtn}
-                    style={!isNew ? { marginLeft: "30px" } : {}}
-                    onClick={() => handleNewDocumentRemove(index)}
-                    src="/images/ph_plus-light (1).svg"
-                    alt=""
-                  />
-                </li>
-              ))}
-          </ul>
-        </div>
+                    <img
+                      className={s.closeBtn}
+                      style={!isNew ? { marginLeft: "30px" } : {}}
+                      onClick={() => handleNewDocumentRemove(index)}
+                      src="/images/ph_plus-light (1).svg"
+                      alt=""
+                    />
+                  </li>
+                ))}
+            </ul>
+          </div>
+        )}
         {photos?.[0] && photos?.[0].length > 1 && (
           <>
             <p>dsadsa</p>
@@ -1300,7 +1378,15 @@ function AdminCheckApplication() {
         {additionalFields &&
           countProjects.map((elem, index) => (
             <div className={s.additionalFields} key={index}>
-              {/* <h1 className={s.title}>{infoCopy && infoCopy.nameTitle || "Проект"} {index+1}<div className={s.delete} onClick={() => deleteAdditionalInf(index)}>Удалить</div></h1> */}
+              <h1 className={s.title}>
+                {"Проект"} {index + 1}
+                <div
+                  className={s.delete}
+                  onClick={() => deleteAdditionalInf(index)}
+                >
+                  Удалить
+                </div>
+              </h1>
 
               {infoCopy &&
                 infoCopy.additionalFields.map((field, idx) => (
@@ -1310,12 +1396,29 @@ function AdminCheckApplication() {
                         {`${field[0].key}`}
                         <span> *</span>
                       </p>
-                      <input
+                      {field[index]?.value &&
+                      field[index]?.value.length >= 30 ? (
+                        <textarea
+                          type="text"
+                          disabled={true}
+                          value={field[index]?.value || ""}
+                          onChange={(e) => handleAddFieldChange(idx, index, e)}
+                          style={{ height: "200px", lineHeight: "25px" }}
+                        />
+                      ) : (
+                        <input
+                          type="text"
+                          disabled={true}
+                          value={field[index]?.value || ""}
+                          onChange={(e) => handleAddFieldChange(idx, index, e)}
+                        />
+                      )}
+                      {/* <input
                         type="text"
                         disabled={true}
                         value={field[index]?.value || ""} // Проверяем существование элемента field[0] и выводим его значение
                         onChange={(e) => handleAddFieldChange(idx, index, e)} // Передаем правильный индекс
-                      />
+                      /> */}
                     </div>
                   </div>
                 ))}
@@ -1359,8 +1462,12 @@ function AdminCheckApplication() {
                   {infoCopy &&
                     // infoCopy.images &&
                     // infoCopy.images === true &&
-                    newPortfolio[index + 1] &&
-                    newPortfolio[index + 1]?.map((file, index1) => {
+                    newPortfolio[
+                      infoCopy?.images == true ? index + 1 : index
+                    ] &&
+                    newPortfolio[
+                      infoCopy?.images == true ? index + 1 : index
+                    ]?.map((file, index1) => {
                       // Определяем индекс строки
                       const rowIndex = Math.floor(index1 / 7);
                       // Определяем позицию внутри строки
@@ -1418,8 +1525,65 @@ function AdminCheckApplication() {
         </div>
       </div>
 
-      <div className={s.questions}>
-        <Questions />
+      <div className={s.grading}>
+        {jouryId ? (
+          <>
+            <h1 className={s.title}>Голосование</h1>
+            <h3 className={s.title}>Основное оценивание</h3>
+          </>
+        ) : (
+          <></>
+        )}
+        {criteria &&
+          jouryId &&
+          criteria.main &&
+          criteria.main.map((elem, index) => (
+            <div key={index} className={s.main}>
+              <p>{elem.name}</p>
+              <StarRating
+                currentRating={
+                  juryRatings.find(
+                    (jury) =>
+                      jury.name === elem.name &&
+                      jury.category === "main" &&
+                      jury.applicationId == applicationId
+                  )?.rating || 0
+                }
+                onRate={(rating) =>
+                  handleRatingChange(elem.name, rating, "main", index)
+                }
+              />
+            </div>
+          ))}
+        {jouryId &&
+          countProjects &&
+          countProjects.map((prj, idx) => (
+            <div className={s.prj}>
+              {criteria && criteria.additional.length > 0 && (
+                <h3 className={s.title}>Оценивание за проект {idx + 1}</h3>
+              )}
+              {criteria &&
+                criteria.additional &&
+                criteria.additional.map((elem, index) => (
+                  <div key={index} className={s.main}>
+                    <p>{elem.name}</p>
+                    <StarRating
+                      name={elem.name}
+                      currentRating={
+                        juryRatings.find(
+                          (jury) =>
+                            jury.name == elem.name &&
+                            jury.category == "additional" &&
+                            jury.projectId == idx &&
+                            jury.applicationId == applicationId
+                        )?.rating || 0
+                      }
+                      onRate={(rating) => console.log("not available")}
+                    />
+                  </div>
+                ))}
+            </div>
+          ))}
       </div>
     </div>
   );

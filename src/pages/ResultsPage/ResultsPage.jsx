@@ -80,8 +80,12 @@ function ResultsPage() {
 
       // Итоговое среднее между main и additional
       const finalAverage =
-        mainRatings.length > 0 || additionalRatings.length > 0
+        mainRatings.length > 0 && additionalRatings.length > 0
           ? (mainAverage + additionalAverage) / 2
+          : mainRatings.length > 0
+          ? mainAverage
+          : additionalRatings.length > 0
+          ? additionalAverage
           : 0;
 
       return {
@@ -175,8 +179,8 @@ function ResultsPage() {
               users
                 .filter(
                   (elem) =>
-                    elem.nomination.toLowerCase() ===
-                    selectedCategory.toLowerCase()
+                    elem.nomination?.toLowerCase() ===
+                    selectedCategory?.toLowerCase()
                 )
                 .sort((a, b) => b.finalAverage - a.finalAverage) // Сортировка по убыванию finalAverage
                 .splice(0, 3)
@@ -217,7 +221,7 @@ function ResultsPage() {
                       {console.log("портфолио", elem)}
                       {elem.portfolio &&
                         elem.portfolio
-                          .slice(0, 4)
+                          .slice(0, 3)
                           .map((elem) => <img src={elem} alt="image" />)}
                     </div>
                   </div>
@@ -232,11 +236,11 @@ function ResultsPage() {
               users
                 .filter(
                   (elem) =>
-                    elem.nomination.toLowerCase() ===
-                    selectedCategory.toLowerCase()
+                    elem.nomination?.toLowerCase() ===
+                    selectedCategory?.toLowerCase()
                 )
                 .sort((a, b) => b.finalAverage - a.finalAverage) // Сортировка по убыванию finalAverage
-                .splice(4, 7)
+                .splice(3, 11)
                 .map((elem, idx) => (
                   <div
                     className={s.nominationBlock}
@@ -262,12 +266,20 @@ function ResultsPage() {
                 ))}
           </div>
         )}
-        <button
-          onClick={() => navigate(`/allResults/${selectedCategory}`)}
-          className={s.showAllBtn}
-        >
-          ВСЕ ПОБЕДИТЕЛИ
-        </button>
+        {users &&
+          users.filter(
+            (elem) =>
+              elem.nomination?.toLowerCase() === selectedCategory?.toLowerCase()
+          ).length > 11 && (
+            <button
+              onClick={() =>
+                navigate(`/allResults/${encodeURIComponent(selectedCategory)}`)
+              }
+              className={s.showAllBtn}
+            >
+              ВСЕ ПОБЕДИТЕЛИ
+            </button>
+          )}
       </div>
     </div>
   );
